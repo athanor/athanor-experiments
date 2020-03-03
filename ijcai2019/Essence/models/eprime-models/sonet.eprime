@@ -1,0 +1,273 @@
+language ESSENCE' 1.0
+
+given nnodes: int(1..)
+given nrings: int(1..)
+given capacity: int(1..)
+given fin1: int
+given demand_ExplicitR3_Explicit: matrix indexed by [int(1..fin1), int(1..2)] of int(1..nnodes)
+find network_ExplicitVarSizeWithMarkerR2_Marker: int(0..nrings)
+find network_ExplicitVarSizeWithMarkerR2_Values_Occurrence: matrix indexed by [int(1..nrings), int(1..nnodes)] of bool
+letting let1 be nrings * capacity
+find optVar: int(0..let1)
+branching on [network_ExplicitVarSizeWithMarkerR2_Marker, network_ExplicitVarSizeWithMarkerR2_Values_Occurrence, optVar]
+minimising optVar
+such that
+    optVar =
+    sum([toInt(q8 <= network_ExplicitVarSizeWithMarkerR2_Marker) *
+         catchUndef(sum([toInt(network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q8, q9]) | q9 : int(1..nnodes)]),
+                    0)
+             | q8 : int(1..nrings)]),
+    and([or([q11 <= network_ExplicitVarSizeWithMarkerR2_Marker /\
+             and([network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q11, demand_ExplicitR3_Explicit[q10, q13]]
+                      | q13 : int(1..2)])
+                 | q11 : int(1..nrings)])
+             | q10 : int(1..fin1)]),
+    and([q1 + 1 <= network_ExplicitVarSizeWithMarkerR2_Marker ->
+         [-toInt(network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q1, q5]) | q5 : int(1..nnodes)] <lex
+         [-toInt(network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q1 + 1, q6]) | q6 : int(1..nnodes)]
+             | q1 : int(1..nrings - 1)]),
+    and([q2 > network_ExplicitVarSizeWithMarkerR2_Marker ->
+         and([network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q2, q7] = false | q7 : int(1..nnodes)])
+             | q2 : int(1..nrings)]),
+    network_ExplicitVarSizeWithMarkerR2_Marker <= nrings,
+    and([q3 <= network_ExplicitVarSizeWithMarkerR2_Marker ->
+         2 <= sum([toInt(network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q3, q4]) | q4 : int(1..nnodes)])
+             | q3 : int(1..nrings)]),
+    and([q3 <= network_ExplicitVarSizeWithMarkerR2_Marker ->
+         sum([toInt(network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q3, q4]) | q4 : int(1..nnodes)]) <= capacity
+             | q3 : int(1..nrings)])
+
+$ Conjure's
+$ {"finds": [{"Name": "network"}, {"Name": "optVar"}],
+$  "givens": [{"Name": "nnodes"}, {"Name": "nrings"}, {"Name": "capacity"}, {"Name": "demand"}],
+$  "enumGivens": [],
+$  "enumLettings": [],
+$  "lettings":
+$      [[{"Name": "Nodes"},
+$        {"Domain":
+$             {"DomainInt":
+$                  [{"TagInt": []},
+$                   [{"RangeBounded":
+$                         [{"Constant": {"ConstantInt": [{"TagInt": []}, 1]}},
+$                          {"Reference":
+$                               [{"Name": "nnodes"},
+$                                {"DeclNoRepr":
+$                                     ["Given", {"Name": "nnodes"},
+$                                      {"DomainInt":
+$                                           [{"TagInt": []},
+$                                            [{"RangeLowerBounded":
+$                                                  {"Constant": {"ConstantInt": [{"TagInt": []}, 1]}}}]]},
+$                                      {"NoRegion": []}]}]}]}]]}}],
+$       [{"MachineName": ["let", 1, []]},
+$        {"Op":
+$             {"MkOpProduct":
+$                  {"AbstractLiteral":
+$                       {"AbsLitMatrix":
+$                            [{"DomainInt":
+$                                  [{"TagInt": []},
+$                                   [{"RangeBounded":
+$                                         [{"Constant": {"ConstantInt": [{"TagInt": []}, 1]}},
+$                                          {"Constant": {"ConstantInt": [{"TagInt": []}, 2]}}]}]]},
+$                             [{"Reference":
+$                                   [{"Name": "nrings"},
+$                                    {"DeclNoRepr":
+$                                         ["Given", {"Name": "nrings"},
+$                                          {"DomainInt":
+$                                               [{"TagInt": []},
+$                                                [{"RangeLowerBounded":
+$                                                      {"Constant": {"ConstantInt": [{"TagInt": []}, 1]}}}]]},
+$                                          {"NoRegion": []}]}]},
+$                              {"Reference":
+$                                   [{"Name": "capacity"},
+$                                    {"DeclNoRepr":
+$                                         ["Given", {"Name": "capacity"},
+$                                          {"DomainInt":
+$                                               [{"TagInt": []},
+$                                                [{"RangeLowerBounded":
+$                                                      {"Constant": {"ConstantInt": [{"TagInt": []}, 1]}}}]]},
+$                                          {"NoRegion": []}]}]}]]}}}}]],
+$  "unnameds": [],
+$  "strategyQ": {"PickFirst": []},
+$  "strategyA": {"Compact": []},
+$  "trailCompact":
+$      [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 8],
+$       [1, 1, 8], [1, 1, 1], [1, 1, 8], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1]],
+$  "trailVerbose": [],
+$  "trailRewrites": [],
+$  "nameGenState": [["fin", 2], ["let", 2], ["q", 14]],
+$  "nbExtraGivens": 1,
+$  "representations":
+$      [[{"MachineName": ["fin", 1, []]}, {"DomainInt": [{"TagInt": []}, []]}],
+$       [{"Name": "nnodes"},
+$        {"DomainInt": [{"TagInt": []}, [{"RangeLowerBounded": {"Constant": {"ConstantInt": [{"TagInt": []}, 1]}}}]]}],
+$       [{"Name": "nrings"},
+$        {"DomainInt": [{"TagInt": []}, [{"RangeLowerBounded": {"Constant": {"ConstantInt": [{"TagInt": []}, 1]}}}]]}],
+$       [{"Name": "capacity"},
+$        {"DomainInt": [{"TagInt": []}, [{"RangeLowerBounded": {"Constant": {"ConstantInt": [{"TagInt": []}, 1]}}}]]}],
+$       [{"Name": "optVar"},
+$        {"DomainInt":
+$             [{"TagInt": []},
+$              [{"RangeBounded":
+$                    [{"Constant": {"ConstantInt": [{"TagInt": []}, 0]}},
+$                     {"Reference":
+$                          [{"MachineName": ["let", 1, []]},
+$                           {"Alias":
+$                                {"Op":
+$                                     {"MkOpProduct":
+$                                          {"AbstractLiteral":
+$                                               {"AbsLitMatrix":
+$                                                    [{"DomainInt":
+$                                                          [{"TagInt": []},
+$                                                           [{"RangeBounded":
+$                                                                 [{"Constant": {"ConstantInt": [{"TagInt": []}, 1]}},
+$                                                                  {"Constant":
+$                                                                       {"ConstantInt": [{"TagInt": []}, 2]}}]}]]},
+$                                                     [{"Reference":
+$                                                           [{"Name": "nrings"},
+$                                                            {"DeclHasRepr":
+$                                                                 ["Given", {"Name": "nrings"},
+$                                                                  {"DomainInt":
+$                                                                       [{"TagInt": []},
+$                                                                        [{"RangeLowerBounded":
+$                                                                              {"Constant":
+$                                                                                   {"ConstantInt":
+$                                                                                        [{"TagInt": []}, 1]}}}]]}]}]},
+$                                                      {"Reference":
+$                                                           [{"Name": "capacity"},
+$                                                            {"DeclHasRepr":
+$                                                                 ["Given", {"Name": "capacity"},
+$                                                                  {"DomainInt":
+$                                                                       [{"TagInt": []},
+$                                                                        [{"RangeLowerBounded":
+$                                                                              {"Constant":
+$                                                                                   {"ConstantInt":
+$                                                                                        [{"TagInt": []},
+$                                                                                         1]}}}]]}]}]}]]}}}}}]}]}]]}],
+$       [{"Name": "network"},
+$        {"DomainSet":
+$             [{"Set_ExplicitVarSizeWithMarker": []},
+$              {"SizeAttr_MaxSize":
+$                   {"Reference":
+$                        [{"Name": "nrings"},
+$                         {"DeclHasRepr":
+$                              ["Given", {"Name": "nrings"},
+$                               {"DomainInt":
+$                                    [{"TagInt": []},
+$                                     [{"RangeLowerBounded": {"Constant": {"ConstantInt": [{"TagInt": []}, 1]}}}]]}]}]}},
+$              {"DomainSet":
+$                   [{"Set_Occurrence": []},
+$                    {"SizeAttr_MinMaxSize":
+$                         [{"Constant": {"ConstantInt": [{"TagInt": []}, 2]}},
+$                          {"Reference":
+$                               [{"Name": "capacity"},
+$                                {"DeclHasRepr":
+$                                     ["Given", {"Name": "capacity"},
+$                                      {"DomainInt":
+$                                           [{"TagInt": []},
+$                                            [{"RangeLowerBounded":
+$                                                  {"Constant": {"ConstantInt": [{"TagInt": []}, 1]}}}]]}]}]}]},
+$                    {"DomainInt":
+$                         [{"TagInt": []},
+$                          [{"RangeBounded":
+$                                [{"Constant": {"ConstantInt": [{"TagInt": []}, 1]}},
+$                                 {"Reference":
+$                                      [{"Name": "nnodes"},
+$                                       {"DeclHasRepr":
+$                                            ["Given", {"Name": "nnodes"},
+$                                             {"DomainInt":
+$                                                  [{"TagInt": []},
+$                                                   [{"RangeLowerBounded":
+$                                                         {"Constant":
+$                                                              {"ConstantInt": [{"TagInt": []}, 1]}}}]]}]}]}]}]]}]}]}],
+$       [{"Name": "demand"},
+$        {"DomainSet":
+$             [{"Set_Explicit": []},
+$              {"SizeAttr_Size":
+$                   {"Reference":
+$                        [{"MachineName": ["fin", 1, []]},
+$                         {"DeclHasRepr":
+$                              ["Given", {"MachineName": ["fin", 1, []]}, {"DomainInt": [{"TagInt": []}, []]}]}]}},
+$              {"DomainSet":
+$                   [{"Set_Explicit": []}, {"SizeAttr_Size": {"Constant": {"ConstantInt": [{"TagInt": []}, 2]}}},
+$                    {"DomainInt":
+$                         [{"TagInt": []},
+$                          [{"RangeBounded":
+$                                [{"Constant": {"ConstantInt": [{"TagInt": []}, 1]}},
+$                                 {"Reference":
+$                                      [{"Name": "nnodes"},
+$                                       {"DeclHasRepr":
+$                                            ["Given", {"Name": "nnodes"},
+$                                             {"DomainInt":
+$                                                  [{"TagInt": []},
+$                                                   [{"RangeLowerBounded":
+$                                                         {"Constant":
+$                                                              {"ConstantInt": [{"TagInt": []}, 1]}}}]]}]}]}]}]]}]}]}]],
+$  "representationsTree":
+$      [[{"Name": "capacity"},
+$        [{"rootLabel": null,
+$          "subForest": []}]],
+$       [{"Name": "demand"},
+$        [{"rootLabel": {"Set_Explicit": []},
+$          "subForest":
+$              [{"rootLabel": {"Set_Explicit": []},
+$                "subForest":
+$                    [{"rootLabel": null,
+$                      "subForest": []}]}]}]],
+$       [{"MachineName": ["fin", 1, []]},
+$        [{"rootLabel": null,
+$          "subForest": []}]],
+$       [{"Name": "network"},
+$        [{"rootLabel": {"Set_ExplicitVarSizeWithMarker": []},
+$          "subForest":
+$              [{"rootLabel": {"Set_Occurrence": []},
+$                "subForest":
+$                    [{"rootLabel": null,
+$                      "subForest": []}]}]}]],
+$       [{"Name": "nnodes"},
+$        [{"rootLabel": null,
+$          "subForest": []}]],
+$       [{"Name": "nrings"},
+$        [{"rootLabel": null,
+$          "subForest": []}]],
+$       [{"Name": "optVar"},
+$        [{"rootLabel": null,
+$          "subForest": []}]]],
+$  "originalDomains":
+$      [[{"Name": "nnodes"},
+$        {"DomainInt": [{"TagInt": []}, [{"RangeLowerBounded": {"Constant": {"ConstantInt": [{"TagInt": []}, 1]}}}]]}],
+$       [{"Name": "nrings"},
+$        {"DomainInt": [{"TagInt": []}, [{"RangeLowerBounded": {"Constant": {"ConstantInt": [{"TagInt": []}, 1]}}}]]}],
+$       [{"Name": "capacity"},
+$        {"DomainInt": [{"TagInt": []}, [{"RangeLowerBounded": {"Constant": {"ConstantInt": [{"TagInt": []}, 1]}}}]]}],
+$       [{"Name": "demand"},
+$        {"DomainSet":
+$             [[], {"SizeAttr_None": []},
+$              {"DomainSet":
+$                   [[], {"SizeAttr_Size": {"Constant": {"ConstantInt": [{"TagInt": []}, 2]}}},
+$                    {"DomainInt":
+$                         [{"TagInt": []},
+$                          [{"RangeBounded":
+$                                [{"Constant": {"ConstantInt": [{"TagInt": []}, 1]}},
+$                                 {"Reference": [{"Name": "nnodes"}, null]}]}]]}]}]}],
+$       [{"Name": "network"},
+$        {"DomainSet":
+$             [[], {"SizeAttr_MaxSize": {"Reference": [{"Name": "nrings"}, null]}},
+$              {"DomainSet":
+$                   [[],
+$                    {"SizeAttr_MinMaxSize":
+$                         [{"Constant": {"ConstantInt": [{"TagInt": []}, 2]}},
+$                          {"Reference": [{"Name": "capacity"}, null]}]},
+$                    {"DomainInt":
+$                         [{"TagInt": []},
+$                          [{"RangeBounded":
+$                                [{"Constant": {"ConstantInt": [{"TagInt": []}, 1]}},
+$                                 {"Reference": [{"Name": "nnodes"}, null]}]}]]}]}]}],
+$       [{"Name": "optVar"},
+$        {"DomainInt":
+$             [{"TagInt": []},
+$              [{"RangeBounded":
+$                    [{"Constant": {"ConstantInt": [{"TagInt": []}, 0]}},
+$                     {"Reference": [{"MachineName": ["let", 1, []]}, null]}]}]]}]]}

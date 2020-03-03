@@ -1,0 +1,1298 @@
+language ESSENCE' 1.0
+
+given nnodes: int(1..)
+given nrings: int(1..)
+given capacity: int(1..)
+given fin1: int
+given demand_ExplicitR3_Explicit: matrix indexed by [int(1..fin1), int(1..2)] of int(1..nnodes)
+find network_ExplicitVarSizeWithMarkerR2_Marker: int(0..nrings)
+find incumbent_network_ExplicitVarSizeWithMarkerR2_Marker: int(0..nrings)
+find network_ExplicitVarSizeWithMarkerR2_Values_Occurrence: matrix indexed by [int(1..nrings), int(1..nnodes)] of bool
+find incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence:
+        matrix indexed by [int(1..nrings), int(1..nnodes)] of bool
+letting let1 be nrings * capacity
+find optVar: int(0..let1)
+branching on [network_ExplicitVarSizeWithMarkerR2_Marker, network_ExplicitVarSizeWithMarkerR2_Values_Occurrence, optVar]
+SNSGroup network_neighbourhoodGroup :
+    [network_ExplicitVarSizeWithMarkerR2_Marker, network_ExplicitVarSizeWithMarkerR2_Values_Occurrence]
+find network_setAddSingle_conjure_aux31: int(1..nrings)
+find network_setAddSingle_conjure_aux32: int(1..nrings)
+find network_setAddSingle_conjure_aux33: int(1..nrings)
+find network_setAddSingle_activation: bool
+find network_setAddSingle_size: int(1..nrings)
+SNSNeighbourhood network_setAddSingle :
+    (network_setAddSingle_size, network_setAddSingle_activation, network_neighbourhoodGroup,
+     [network_setAddSingle_conjure_aux31, network_setAddSingle_conjure_aux32, network_setAddSingle_conjure_aux33])
+find network_setLiftMultiple_setCollect_conjure_aux34: int(1..nrings)
+find network_setLiftMultiple_setCollect_conjure_aux35: int(1..nrings)
+find network_setLiftMultiple_setCollect_conjure_aux36: int(1..nrings)
+find network_setLiftMultiple_setCollect_conjure_aux37: int(1..nrings)
+find network_setLiftMultiple_setCollect_conjure_aux38: int(1..nrings)
+find network_setLiftMultiple_setCollect_conjure_aux39: int(1..nrings)
+find network_setLiftMultiple_setCollect_activation: bool
+find network_setLiftMultiple_setCollect_size: int(1..capacity)
+SNSNeighbourhood network_setLiftMultiple_setCollect :
+    (network_setLiftMultiple_setCollect_size, network_setLiftMultiple_setCollect_activation, network_neighbourhoodGroup,
+     [network_setLiftMultiple_setCollect_conjure_aux34, network_setLiftMultiple_setCollect_conjure_aux35,
+      network_setLiftMultiple_setCollect_conjure_aux36, network_setLiftMultiple_setCollect_conjure_aux37,
+      network_setLiftMultiple_setCollect_conjure_aux38, network_setLiftMultiple_setCollect_conjure_aux39])
+find network_setLiftMultiple_setCrossOver_conjure_aux40: int(1..nrings)
+find network_setLiftMultiple_setCrossOver_conjure_aux41: int(1..nrings)
+find network_setLiftMultiple_setCrossOver_conjure_aux42: int(1..nrings)
+find network_setLiftMultiple_setCrossOver_conjure_aux43: int(1..nrings)
+find network_setLiftMultiple_setCrossOver_activation: bool
+find network_setLiftMultiple_setCrossOver_size: int(1..capacity)
+SNSNeighbourhood network_setLiftMultiple_setCrossOver :
+    (network_setLiftMultiple_setCrossOver_size, network_setLiftMultiple_setCrossOver_activation,
+     network_neighbourhoodGroup,
+     [network_setLiftMultiple_setCrossOver_conjure_aux40, network_setLiftMultiple_setCrossOver_conjure_aux41,
+      network_setLiftMultiple_setCrossOver_conjure_aux42, network_setLiftMultiple_setCrossOver_conjure_aux43])
+find network_setLiftMultiple_setMerge_conjure_aux44: int(1..nrings)
+find network_setLiftMultiple_setMerge_conjure_aux45: int(1..nrings)
+find network_setLiftMultiple_setMerge_conjure_aux46: int(1..nrings)
+find network_setLiftMultiple_setMerge_activation: bool
+find network_setLiftMultiple_setMerge_size: int(1..capacity)
+SNSNeighbourhood network_setLiftMultiple_setMerge :
+    (network_setLiftMultiple_setMerge_size, network_setLiftMultiple_setMerge_activation, network_neighbourhoodGroup,
+     [network_setLiftMultiple_setMerge_conjure_aux44, network_setLiftMultiple_setMerge_conjure_aux45,
+      network_setLiftMultiple_setMerge_conjure_aux46])
+find network_setLiftMultiple_setMove_conjure_aux47: int(1..nrings)
+find network_setLiftMultiple_setMove_conjure_aux48: int(1..nrings)
+find network_setLiftMultiple_setMove_conjure_aux49: int(1..nrings)
+find network_setLiftMultiple_setMove_conjure_aux50: int(1..nrings)
+find network_setLiftMultiple_setMove_activation: bool
+find network_setLiftMultiple_setMove_size: int(1..capacity)
+SNSNeighbourhood network_setLiftMultiple_setMove :
+    (network_setLiftMultiple_setMove_size, network_setLiftMultiple_setMove_activation, network_neighbourhoodGroup,
+     [network_setLiftMultiple_setMove_conjure_aux47, network_setLiftMultiple_setMove_conjure_aux48,
+      network_setLiftMultiple_setMove_conjure_aux49, network_setLiftMultiple_setMove_conjure_aux50])
+find network_setLiftMultiple_setSplit_conjure_aux51: int(1..nrings)
+find network_setLiftMultiple_setSplit_conjure_aux52: int(1..nrings)
+find network_setLiftMultiple_setSplit_conjure_aux53: int(1..nrings)
+find network_setLiftMultiple_setSplit_activation: bool
+find network_setLiftMultiple_setSplit_size: int(1..capacity)
+SNSNeighbourhood network_setLiftMultiple_setSplit :
+    (network_setLiftMultiple_setSplit_size, network_setLiftMultiple_setSplit_activation, network_neighbourhoodGroup,
+     [network_setLiftMultiple_setSplit_conjure_aux51, network_setLiftMultiple_setSplit_conjure_aux52,
+      network_setLiftMultiple_setSplit_conjure_aux53])
+find network_setLiftSingle_setAdd_conjure_aux54: int(1..nrings)
+find network_setLiftSingle_setAdd_conjure_aux55: int(1..nrings)
+find network_setLiftSingle_setAdd_activation: bool
+find network_setLiftSingle_setAdd_size: int(1..capacity)
+SNSNeighbourhood network_setLiftSingle_setAdd :
+    (network_setLiftSingle_setAdd_size, network_setLiftSingle_setAdd_activation, network_neighbourhoodGroup,
+     [network_setLiftSingle_setAdd_conjure_aux54, network_setLiftSingle_setAdd_conjure_aux55])
+find network_setLiftSingle_setDiff_conjure_aux56: int(1..nrings)
+find network_setLiftSingle_setDiff_conjure_aux57: int(1..nrings)
+find network_setLiftSingle_setDiff_activation: bool
+find network_setLiftSingle_setDiff_size: int(1..capacity)
+SNSNeighbourhood network_setLiftSingle_setDiff :
+    (network_setLiftSingle_setDiff_size, network_setLiftSingle_setDiff_activation, network_neighbourhoodGroup,
+     [network_setLiftSingle_setDiff_conjure_aux56, network_setLiftSingle_setDiff_conjure_aux57])
+find network_setLiftSingle_setRemove_conjure_aux58: int(1..nrings)
+find network_setLiftSingle_setRemove_conjure_aux59: int(1..nrings)
+find network_setLiftSingle_setRemove_activation: bool
+find network_setLiftSingle_setRemove_size: int(1..capacity)
+SNSNeighbourhood network_setLiftSingle_setRemove :
+    (network_setLiftSingle_setRemove_size, network_setLiftSingle_setRemove_activation, network_neighbourhoodGroup,
+     [network_setLiftSingle_setRemove_conjure_aux58, network_setLiftSingle_setRemove_conjure_aux59])
+find network_setLiftSingle_setSwap_conjure_aux60: int(1..nrings)
+find network_setLiftSingle_setSwap_conjure_aux61: int(1..nrings)
+find network_setLiftSingle_setSwap_activation: bool
+find network_setLiftSingle_setSwap_size: int(1..capacity)
+SNSNeighbourhood network_setLiftSingle_setSwap :
+    (network_setLiftSingle_setSwap_size, network_setLiftSingle_setSwap_activation, network_neighbourhoodGroup,
+     [network_setLiftSingle_setSwap_conjure_aux60, network_setLiftSingle_setSwap_conjure_aux61])
+find network_setLiftSingle_setSwapAdd_conjure_aux62: int(1..nrings)
+find network_setLiftSingle_setSwapAdd_conjure_aux63: int(1..nrings)
+find network_setLiftSingle_setSwapAdd_activation: bool
+find network_setLiftSingle_setSwapAdd_size: int(1..capacity)
+SNSNeighbourhood network_setLiftSingle_setSwapAdd :
+    (network_setLiftSingle_setSwapAdd_size, network_setLiftSingle_setSwapAdd_activation, network_neighbourhoodGroup,
+     [network_setLiftSingle_setSwapAdd_conjure_aux62, network_setLiftSingle_setSwapAdd_conjure_aux63])
+find network_setLiftSingle_setSwapRemove_conjure_aux64: int(1..nrings)
+find network_setLiftSingle_setSwapRemove_conjure_aux65: int(1..nrings)
+find network_setLiftSingle_setSwapRemove_activation: bool
+find network_setLiftSingle_setSwapRemove_size: int(1..capacity)
+SNSNeighbourhood network_setLiftSingle_setSwapRemove :
+    (network_setLiftSingle_setSwapRemove_size, network_setLiftSingle_setSwapRemove_activation,
+     network_neighbourhoodGroup,
+     [network_setLiftSingle_setSwapRemove_conjure_aux64, network_setLiftSingle_setSwapRemove_conjure_aux65])
+find network_setRemoveSingle_conjure_aux66: int(1..nrings)
+find network_setRemoveSingle_conjure_aux67: int(1..nrings)
+find network_setRemoveSingle_conjure_aux68: int(1..nrings)
+find network_setRemoveSingle_activation: bool
+find network_setRemoveSingle_size: int(1..nrings)
+SNSNeighbourhood network_setRemoveSingle :
+    (network_setRemoveSingle_size, network_setRemoveSingle_activation, network_neighbourhoodGroup,
+     [network_setRemoveSingle_conjure_aux66, network_setRemoveSingle_conjure_aux67,
+      network_setRemoveSingle_conjure_aux68])
+SNSIncumbentMapping([network_ExplicitVarSizeWithMarkerR2_Marker, network_ExplicitVarSizeWithMarkerR2_Values_Occurrence],
+                    [incumbent_network_ExplicitVarSizeWithMarkerR2_Marker,
+                     incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence])
+minimising optVar
+such that
+    optVar =
+    sum([toInt(q11 <= network_ExplicitVarSizeWithMarkerR2_Marker) *
+         catchUndef(sum([toInt(network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q11, q12])
+                             | q12 : int(1..nnodes)]),
+                    0)
+             | q11 : int(1..nrings)]),
+    and([or([q14 <= network_ExplicitVarSizeWithMarkerR2_Marker /\
+             and([network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q14, demand_ExplicitR3_Explicit[q13, q16]]
+                      | q16 : int(1..2)])
+                 | q14 : int(1..nrings)])
+             | q13 : int(1..fin1)]),
+    network_setAddSingle_activation -> allDiff([network_setAddSingle_conjure_aux31; int(1)]),
+    network_setAddSingle_activation ->
+    network_setAddSingle_conjure_aux31 <= incumbent_network_ExplicitVarSizeWithMarkerR2_Marker,
+    network_setAddSingle_activation ->
+    allDiff([network_setAddSingle_conjure_aux32, network_setAddSingle_conjure_aux33; int(1..2)]),
+    network_setAddSingle_activation ->
+    network_setAddSingle_conjure_aux32 <= network_ExplicitVarSizeWithMarkerR2_Marker /\
+    network_setAddSingle_conjure_aux33 <= network_ExplicitVarSizeWithMarkerR2_Marker,
+    network_setAddSingle_activation ->
+    and([q17 <= incumbent_network_ExplicitVarSizeWithMarkerR2_Marker /\ !(q17 = network_setAddSingle_conjure_aux31) ->
+         and([network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q17, q22] =
+              incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q17, q22]
+                  | q22 : int(1..nnodes)])
+             | q17 : int(1..nrings)]),
+    network_setAddSingle_activation ->
+    and([network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[network_setAddSingle_conjure_aux32, q24] =
+         incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[network_setAddSingle_conjure_aux31, q24]
+             | q24 : int(1..nnodes)])
+    /\
+    sum([toInt(network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[network_setAddSingle_conjure_aux33, q26])
+             | q26 : int(1..nnodes)])
+    = network_setAddSingle_size,
+    network_setAddSingle_activation ->
+    network_ExplicitVarSizeWithMarkerR2_Marker = incumbent_network_ExplicitVarSizeWithMarkerR2_Marker + 1,
+    network_setAddSingle_activation ->
+    network_setAddSingle_conjure_aux32 = network_setAddSingle_conjure_aux31 \/
+    network_setAddSingle_conjure_aux33 = network_setAddSingle_conjure_aux31,
+    network_setAddSingle_activation -> true,
+    !network_setAddSingle_activation ->
+    and([network_setAddSingle_size = 1, network_setAddSingle_conjure_aux31 = 1, network_setAddSingle_conjure_aux32 = 1,
+         network_setAddSingle_conjure_aux33 = 1;
+             int(1..4)]),
+    network_setLiftMultiple_setCollect_activation ->
+    allDiff([network_setLiftMultiple_setCollect_conjure_aux34, network_setLiftMultiple_setCollect_conjure_aux35,
+             network_setLiftMultiple_setCollect_conjure_aux36;
+                 int(1..3)]),
+    network_setLiftMultiple_setCollect_activation ->
+    and([network_setLiftMultiple_setCollect_conjure_aux34 <= incumbent_network_ExplicitVarSizeWithMarkerR2_Marker,
+         network_setLiftMultiple_setCollect_conjure_aux35 <= incumbent_network_ExplicitVarSizeWithMarkerR2_Marker,
+         network_setLiftMultiple_setCollect_conjure_aux36 <= incumbent_network_ExplicitVarSizeWithMarkerR2_Marker;
+             int(1..3)]),
+    network_setLiftMultiple_setCollect_activation ->
+    allDiff([network_setLiftMultiple_setCollect_conjure_aux37, network_setLiftMultiple_setCollect_conjure_aux38,
+             network_setLiftMultiple_setCollect_conjure_aux39;
+                 int(1..3)]),
+    network_setLiftMultiple_setCollect_activation ->
+    and([network_setLiftMultiple_setCollect_conjure_aux37 <= network_ExplicitVarSizeWithMarkerR2_Marker,
+         network_setLiftMultiple_setCollect_conjure_aux38 <= network_ExplicitVarSizeWithMarkerR2_Marker,
+         network_setLiftMultiple_setCollect_conjure_aux39 <= network_ExplicitVarSizeWithMarkerR2_Marker;
+             int(1..3)]),
+    network_setLiftMultiple_setCollect_activation ->
+    and([q27 <= incumbent_network_ExplicitVarSizeWithMarkerR2_Marker /\
+         !or([q27 = network_setLiftMultiple_setCollect_conjure_aux34,
+              q27 = network_setLiftMultiple_setCollect_conjure_aux35,
+              q27 = network_setLiftMultiple_setCollect_conjure_aux36;
+                  int(1..3)])
+         ->
+         and([network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q27, q44] =
+              incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q27, q44]
+                  | q44 : int(1..nnodes)])
+             | q27 : int(1..nrings)]),
+    network_setLiftMultiple_setCollect_activation ->
+    and([and([network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                  [network_setLiftMultiple_setCollect_conjure_aux37, q46]
+              ->
+              incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                  [network_setLiftMultiple_setCollect_conjure_aux34, q46]
+                  | q46 : int(1..nnodes)]),
+         sum([toInt(incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                        [network_setLiftMultiple_setCollect_conjure_aux34, q47])
+                  | q47 : int(1..nnodes)])
+         -
+         sum([toInt(network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                        [network_setLiftMultiple_setCollect_conjure_aux37, q48])
+                  | q48 : int(1..nnodes)])
+         = network_setLiftMultiple_setCollect_size,
+         and([network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                  [network_setLiftMultiple_setCollect_conjure_aux38, q49]
+              ->
+              incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                  [network_setLiftMultiple_setCollect_conjure_aux35, q49]
+                  | q49 : int(1..nnodes)]),
+         sum([toInt(incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                        [network_setLiftMultiple_setCollect_conjure_aux35, q50])
+                  | q50 : int(1..nnodes)])
+         -
+         sum([toInt(network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                        [network_setLiftMultiple_setCollect_conjure_aux38, q51])
+                  | q51 : int(1..nnodes)])
+         = network_setLiftMultiple_setCollect_size,
+         and([incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                  [network_setLiftMultiple_setCollect_conjure_aux34, q52]
+              /\
+              !network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                   [network_setLiftMultiple_setCollect_conjure_aux37, q52]
+              ->
+              or([incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                      [network_setLiftMultiple_setCollect_conjure_aux35, q53]
+                  /\
+                  !network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                       [network_setLiftMultiple_setCollect_conjure_aux38, q53]
+                  /\ q53 = q52
+                      | q53 : int(1..nnodes)])
+                  | q52 : int(1..nnodes)])
+         /\
+         and([incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                  [network_setLiftMultiple_setCollect_conjure_aux35, q54]
+              /\
+              !network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                   [network_setLiftMultiple_setCollect_conjure_aux38, q54]
+              ->
+              or([incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                      [network_setLiftMultiple_setCollect_conjure_aux34, q55]
+                  /\
+                  !network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                       [network_setLiftMultiple_setCollect_conjure_aux37, q55]
+                  /\ q55 = q54
+                      | q55 : int(1..nnodes)])
+                  | q54 : int(1..nnodes)]),
+         and([incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                  [network_setLiftMultiple_setCollect_conjure_aux36, q56]
+              ->
+              network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                  [network_setLiftMultiple_setCollect_conjure_aux39, q56]
+                  | q56 : int(1..nnodes)]),
+         sum([toInt(network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                        [network_setLiftMultiple_setCollect_conjure_aux39, q57])
+                  | q57 : int(1..nnodes)])
+         -
+         sum([toInt(incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                        [network_setLiftMultiple_setCollect_conjure_aux36, q58])
+                  | q58 : int(1..nnodes)])
+         = network_setLiftMultiple_setCollect_size,
+         and([incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                  [network_setLiftMultiple_setCollect_conjure_aux34, q2]
+              /\
+              !network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                   [network_setLiftMultiple_setCollect_conjure_aux37, q2]
+              ->
+              network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                  [network_setLiftMultiple_setCollect_conjure_aux39, q2]
+                  | q2 : int(1..nnodes)]);
+             int(1..8)]),
+    network_setLiftMultiple_setCollect_activation ->
+    network_ExplicitVarSizeWithMarkerR2_Marker = incumbent_network_ExplicitVarSizeWithMarkerR2_Marker,
+    network_setLiftMultiple_setCollect_activation ->
+    and([or([network_setLiftMultiple_setCollect_conjure_aux37 = network_setLiftMultiple_setCollect_conjure_aux34,
+             network_setLiftMultiple_setCollect_conjure_aux38 = network_setLiftMultiple_setCollect_conjure_aux34,
+             network_setLiftMultiple_setCollect_conjure_aux39 = network_setLiftMultiple_setCollect_conjure_aux34;
+                 int(1..3)]),
+         or([network_setLiftMultiple_setCollect_conjure_aux37 = network_setLiftMultiple_setCollect_conjure_aux35,
+             network_setLiftMultiple_setCollect_conjure_aux38 = network_setLiftMultiple_setCollect_conjure_aux35,
+             network_setLiftMultiple_setCollect_conjure_aux39 = network_setLiftMultiple_setCollect_conjure_aux35;
+                 int(1..3)]),
+         or([network_setLiftMultiple_setCollect_conjure_aux37 = network_setLiftMultiple_setCollect_conjure_aux36,
+             network_setLiftMultiple_setCollect_conjure_aux38 = network_setLiftMultiple_setCollect_conjure_aux36,
+             network_setLiftMultiple_setCollect_conjure_aux39 = network_setLiftMultiple_setCollect_conjure_aux36;
+                 int(1..3)]);
+             int(1..3)]),
+    network_setLiftMultiple_setCollect_activation ->
+    and([or([network_setLiftMultiple_setCollect_conjure_aux34 = network_setLiftMultiple_setCollect_conjure_aux37,
+             network_setLiftMultiple_setCollect_conjure_aux35 = network_setLiftMultiple_setCollect_conjure_aux37,
+             network_setLiftMultiple_setCollect_conjure_aux36 = network_setLiftMultiple_setCollect_conjure_aux37;
+                 int(1..3)]),
+         or([network_setLiftMultiple_setCollect_conjure_aux34 = network_setLiftMultiple_setCollect_conjure_aux38,
+             network_setLiftMultiple_setCollect_conjure_aux35 = network_setLiftMultiple_setCollect_conjure_aux38,
+             network_setLiftMultiple_setCollect_conjure_aux36 = network_setLiftMultiple_setCollect_conjure_aux38;
+                 int(1..3)]),
+         or([network_setLiftMultiple_setCollect_conjure_aux34 = network_setLiftMultiple_setCollect_conjure_aux39,
+             network_setLiftMultiple_setCollect_conjure_aux35 = network_setLiftMultiple_setCollect_conjure_aux39,
+             network_setLiftMultiple_setCollect_conjure_aux36 = network_setLiftMultiple_setCollect_conjure_aux39;
+                 int(1..3)]);
+             int(1..3)]),
+    network_setLiftMultiple_setCollect_activation -> true,
+    !network_setLiftMultiple_setCollect_activation ->
+    and([network_setLiftMultiple_setCollect_size = 1, network_setLiftMultiple_setCollect_conjure_aux34 = 1,
+         network_setLiftMultiple_setCollect_conjure_aux35 = 1, network_setLiftMultiple_setCollect_conjure_aux36 = 1,
+         network_setLiftMultiple_setCollect_conjure_aux37 = 1, network_setLiftMultiple_setCollect_conjure_aux38 = 1,
+         network_setLiftMultiple_setCollect_conjure_aux39 = 1;
+             int(1..7)]),
+    network_setLiftMultiple_setCrossOver_activation ->
+    allDiff([network_setLiftMultiple_setCrossOver_conjure_aux40, network_setLiftMultiple_setCrossOver_conjure_aux41;
+                 int(1..2)]),
+    network_setLiftMultiple_setCrossOver_activation ->
+    network_setLiftMultiple_setCrossOver_conjure_aux40 <= incumbent_network_ExplicitVarSizeWithMarkerR2_Marker /\
+    network_setLiftMultiple_setCrossOver_conjure_aux41 <= incumbent_network_ExplicitVarSizeWithMarkerR2_Marker,
+    network_setLiftMultiple_setCrossOver_activation ->
+    allDiff([network_setLiftMultiple_setCrossOver_conjure_aux42, network_setLiftMultiple_setCrossOver_conjure_aux43;
+                 int(1..2)]),
+    network_setLiftMultiple_setCrossOver_activation ->
+    network_setLiftMultiple_setCrossOver_conjure_aux42 <= network_ExplicitVarSizeWithMarkerR2_Marker /\
+    network_setLiftMultiple_setCrossOver_conjure_aux43 <= network_ExplicitVarSizeWithMarkerR2_Marker,
+    network_setLiftMultiple_setCrossOver_activation ->
+    and([q59 <= incumbent_network_ExplicitVarSizeWithMarkerR2_Marker /\
+         !(q59 = network_setLiftMultiple_setCrossOver_conjure_aux40 \/
+           q59 = network_setLiftMultiple_setCrossOver_conjure_aux41)
+         ->
+         and([network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q59, q72] =
+              incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q59, q72]
+                  | q72 : int(1..nnodes)])
+             | q59 : int(1..nrings)]),
+    network_setLiftMultiple_setCrossOver_activation ->
+    and([and([incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                  [network_setLiftMultiple_setCrossOver_conjure_aux40, q74]
+              ->
+              or([network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                      [network_setLiftMultiple_setCrossOver_conjure_aux42, q76]
+                  /\ q76 = q74
+                      | q76 : int(1..nnodes)])
+              \/
+              or([network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                      [network_setLiftMultiple_setCrossOver_conjure_aux43, q76]
+                  /\
+                  !network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                       [network_setLiftMultiple_setCrossOver_conjure_aux42, q76]
+                  /\ q76 = q74
+                      | q76 : int(1..nnodes)])
+                  | q74 : int(1..nnodes)])
+         /\
+         and([incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                  [network_setLiftMultiple_setCrossOver_conjure_aux41, q74]
+              /\
+              !incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                   [network_setLiftMultiple_setCrossOver_conjure_aux40, q74]
+              ->
+              or([network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                      [network_setLiftMultiple_setCrossOver_conjure_aux42, q75]
+                  /\ q75 = q74
+                      | q75 : int(1..nnodes)])
+              \/
+              or([network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                      [network_setLiftMultiple_setCrossOver_conjure_aux43, q75]
+                  /\
+                  !network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                       [network_setLiftMultiple_setCrossOver_conjure_aux42, q75]
+                  /\ q75 = q74
+                      | q75 : int(1..nnodes)])
+                  | q74 : int(1..nnodes)])
+         /\
+         (and([network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                   [network_setLiftMultiple_setCrossOver_conjure_aux42, q77]
+               ->
+               or([incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                       [network_setLiftMultiple_setCrossOver_conjure_aux40, q79]
+                   /\ q79 = q77
+                       | q79 : int(1..nnodes)])
+               \/
+               or([incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                       [network_setLiftMultiple_setCrossOver_conjure_aux41, q79]
+                   /\
+                   !incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                        [network_setLiftMultiple_setCrossOver_conjure_aux40, q79]
+                   /\ q79 = q77
+                       | q79 : int(1..nnodes)])
+                   | q77 : int(1..nnodes)])
+          /\
+          and([network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                   [network_setLiftMultiple_setCrossOver_conjure_aux43, q77]
+               /\
+               !network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                    [network_setLiftMultiple_setCrossOver_conjure_aux42, q77]
+               ->
+               or([incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                       [network_setLiftMultiple_setCrossOver_conjure_aux40, q78]
+                   /\ q78 = q77
+                       | q78 : int(1..nnodes)])
+               \/
+               or([incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                       [network_setLiftMultiple_setCrossOver_conjure_aux41, q78]
+                   /\
+                   !incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                        [network_setLiftMultiple_setCrossOver_conjure_aux40, q78]
+                   /\ q78 = q77
+                       | q78 : int(1..nnodes)])
+                   | q77 : int(1..nnodes)])),
+         sum([toInt(network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                        [network_setLiftMultiple_setCrossOver_conjure_aux42, q80]
+                    /\
+                    !incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                         [network_setLiftMultiple_setCrossOver_conjure_aux40, q80])
+                  | q80 : int(1..nnodes)])
+         = network_setLiftMultiple_setCrossOver_size,
+         sum([toInt(network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                        [network_setLiftMultiple_setCrossOver_conjure_aux43, q81]
+                    /\
+                    !incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                         [network_setLiftMultiple_setCrossOver_conjure_aux41, q81])
+                  | q81 : int(1..nnodes)])
+         = network_setLiftMultiple_setCrossOver_size;
+             int(1..3)]),
+    network_setLiftMultiple_setCrossOver_activation ->
+    network_ExplicitVarSizeWithMarkerR2_Marker = incumbent_network_ExplicitVarSizeWithMarkerR2_Marker,
+    network_setLiftMultiple_setCrossOver_activation ->
+    (network_setLiftMultiple_setCrossOver_conjure_aux42 = network_setLiftMultiple_setCrossOver_conjure_aux40 \/
+     network_setLiftMultiple_setCrossOver_conjure_aux43 = network_setLiftMultiple_setCrossOver_conjure_aux40)
+    /\
+    (network_setLiftMultiple_setCrossOver_conjure_aux42 = network_setLiftMultiple_setCrossOver_conjure_aux41 \/
+     network_setLiftMultiple_setCrossOver_conjure_aux43 = network_setLiftMultiple_setCrossOver_conjure_aux41),
+    network_setLiftMultiple_setCrossOver_activation ->
+    (network_setLiftMultiple_setCrossOver_conjure_aux40 = network_setLiftMultiple_setCrossOver_conjure_aux42 \/
+     network_setLiftMultiple_setCrossOver_conjure_aux41 = network_setLiftMultiple_setCrossOver_conjure_aux42)
+    /\
+    (network_setLiftMultiple_setCrossOver_conjure_aux40 = network_setLiftMultiple_setCrossOver_conjure_aux43 \/
+     network_setLiftMultiple_setCrossOver_conjure_aux41 = network_setLiftMultiple_setCrossOver_conjure_aux43),
+    network_setLiftMultiple_setCrossOver_activation -> true,
+    !network_setLiftMultiple_setCrossOver_activation ->
+    and([network_setLiftMultiple_setCrossOver_size = 1, network_setLiftMultiple_setCrossOver_conjure_aux40 = 1,
+         network_setLiftMultiple_setCrossOver_conjure_aux41 = 1, network_setLiftMultiple_setCrossOver_conjure_aux42 = 1,
+         network_setLiftMultiple_setCrossOver_conjure_aux43 = 1;
+             int(1..5)]),
+    network_setLiftMultiple_setMerge_activation ->
+    allDiff([network_setLiftMultiple_setMerge_conjure_aux44, network_setLiftMultiple_setMerge_conjure_aux45;
+                 int(1..2)]),
+    network_setLiftMultiple_setMerge_activation ->
+    network_setLiftMultiple_setMerge_conjure_aux44 <= incumbent_network_ExplicitVarSizeWithMarkerR2_Marker /\
+    network_setLiftMultiple_setMerge_conjure_aux45 <= incumbent_network_ExplicitVarSizeWithMarkerR2_Marker,
+    network_setLiftMultiple_setMerge_activation -> allDiff([network_setLiftMultiple_setMerge_conjure_aux46; int(1)]),
+    network_setLiftMultiple_setMerge_activation ->
+    network_setLiftMultiple_setMerge_conjure_aux46 <= network_ExplicitVarSizeWithMarkerR2_Marker,
+    network_setLiftMultiple_setMerge_activation ->
+    and([q82 <= incumbent_network_ExplicitVarSizeWithMarkerR2_Marker /\
+         !(q82 = network_setLiftMultiple_setMerge_conjure_aux44 \/ q82 = network_setLiftMultiple_setMerge_conjure_aux45)
+         ->
+         and([network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q82, q87] =
+              incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q82, q87]
+                  | q87 : int(1..nnodes)])
+             | q82 : int(1..nrings)]),
+    network_setLiftMultiple_setMerge_activation ->
+    sum([toInt(incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                   [network_setLiftMultiple_setMerge_conjure_aux44, q89])
+             | q89 : int(1..nnodes)])
+    <= network_setLiftMultiple_setMerge_size
+    /\
+    (and([incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+              [network_setLiftMultiple_setMerge_conjure_aux44, q90]
+          -> network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[network_setLiftMultiple_setMerge_conjure_aux46, q90]
+              | q90 : int(1..nnodes)])
+     /\
+     and([incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+              [network_setLiftMultiple_setMerge_conjure_aux45, q90]
+          /\
+          !incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+               [network_setLiftMultiple_setMerge_conjure_aux44, q90]
+          -> network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[network_setLiftMultiple_setMerge_conjure_aux46, q90]
+              | q90 : int(1..nnodes)])
+     /\
+     and([network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[network_setLiftMultiple_setMerge_conjure_aux46, q91] ->
+          or([incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                  [network_setLiftMultiple_setMerge_conjure_aux44, q92]
+              /\ q92 = q91
+                  | q92 : int(1..nnodes)])
+          \/
+          or([incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                  [network_setLiftMultiple_setMerge_conjure_aux45, q92]
+              /\
+              !incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                   [network_setLiftMultiple_setMerge_conjure_aux44, q92]
+              /\ q92 = q91
+                  | q92 : int(1..nnodes)])
+              | q91 : int(1..nnodes)])),
+    network_setLiftMultiple_setMerge_activation ->
+    network_ExplicitVarSizeWithMarkerR2_Marker = incumbent_network_ExplicitVarSizeWithMarkerR2_Marker + -1,
+    network_setLiftMultiple_setMerge_activation ->
+    network_setLiftMultiple_setMerge_conjure_aux44 = network_setLiftMultiple_setMerge_conjure_aux46 \/
+    network_setLiftMultiple_setMerge_conjure_aux45 = network_setLiftMultiple_setMerge_conjure_aux46,
+    network_setLiftMultiple_setMerge_activation -> true,
+    !network_setLiftMultiple_setMerge_activation ->
+    and([network_setLiftMultiple_setMerge_size = 1, network_setLiftMultiple_setMerge_conjure_aux44 = 1,
+         network_setLiftMultiple_setMerge_conjure_aux45 = 1, network_setLiftMultiple_setMerge_conjure_aux46 = 1;
+             int(1..4)]),
+    network_setLiftMultiple_setMove_activation ->
+    allDiff([network_setLiftMultiple_setMove_conjure_aux47, network_setLiftMultiple_setMove_conjure_aux48; int(1..2)]),
+    network_setLiftMultiple_setMove_activation ->
+    network_setLiftMultiple_setMove_conjure_aux47 <= incumbent_network_ExplicitVarSizeWithMarkerR2_Marker /\
+    network_setLiftMultiple_setMove_conjure_aux48 <= incumbent_network_ExplicitVarSizeWithMarkerR2_Marker,
+    network_setLiftMultiple_setMove_activation ->
+    allDiff([network_setLiftMultiple_setMove_conjure_aux49, network_setLiftMultiple_setMove_conjure_aux50; int(1..2)]),
+    network_setLiftMultiple_setMove_activation ->
+    network_setLiftMultiple_setMove_conjure_aux49 <= network_ExplicitVarSizeWithMarkerR2_Marker /\
+    network_setLiftMultiple_setMove_conjure_aux50 <= network_ExplicitVarSizeWithMarkerR2_Marker,
+    network_setLiftMultiple_setMove_activation ->
+    and([q93 <= incumbent_network_ExplicitVarSizeWithMarkerR2_Marker /\
+         !(q93 = network_setLiftMultiple_setMove_conjure_aux47 \/ q93 = network_setLiftMultiple_setMove_conjure_aux48)
+         ->
+         and([network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q93, q106] =
+              incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q93, q106]
+                  | q106 : int(1..nnodes)])
+             | q93 : int(1..nrings)]),
+    network_setLiftMultiple_setMove_activation ->
+    and([and([network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[network_setLiftMultiple_setMove_conjure_aux49, q108]
+              ->
+              incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                  [network_setLiftMultiple_setMove_conjure_aux47, q108]
+                  | q108 : int(1..nnodes)]),
+         sum([toInt(incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                        [network_setLiftMultiple_setMove_conjure_aux47, q109])
+                  | q109 : int(1..nnodes)])
+         -
+         sum([toInt(network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                        [network_setLiftMultiple_setMove_conjure_aux49, q110])
+                  | q110 : int(1..nnodes)])
+         = network_setLiftMultiple_setMove_size,
+         and([incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                  [network_setLiftMultiple_setMove_conjure_aux48, q111]
+              ->
+              network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[network_setLiftMultiple_setMove_conjure_aux50, q111]
+                  | q111 : int(1..nnodes)]),
+         sum([toInt(network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                        [network_setLiftMultiple_setMove_conjure_aux50, q112])
+                  | q112 : int(1..nnodes)])
+         -
+         sum([toInt(incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                        [network_setLiftMultiple_setMove_conjure_aux48, q113])
+                  | q113 : int(1..nnodes)])
+         = network_setLiftMultiple_setMove_size,
+         and([incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                  [network_setLiftMultiple_setMove_conjure_aux47, q1]
+              /\
+              !network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[network_setLiftMultiple_setMove_conjure_aux49, q1]
+              ->
+              network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[network_setLiftMultiple_setMove_conjure_aux50, q1]
+                  | q1 : int(1..nnodes)]);
+             int(1..5)]),
+    network_setLiftMultiple_setMove_activation ->
+    network_ExplicitVarSizeWithMarkerR2_Marker = incumbent_network_ExplicitVarSizeWithMarkerR2_Marker,
+    network_setLiftMultiple_setMove_activation ->
+    (network_setLiftMultiple_setMove_conjure_aux49 = network_setLiftMultiple_setMove_conjure_aux47 \/
+     network_setLiftMultiple_setMove_conjure_aux50 = network_setLiftMultiple_setMove_conjure_aux47)
+    /\
+    (network_setLiftMultiple_setMove_conjure_aux49 = network_setLiftMultiple_setMove_conjure_aux48 \/
+     network_setLiftMultiple_setMove_conjure_aux50 = network_setLiftMultiple_setMove_conjure_aux48),
+    network_setLiftMultiple_setMove_activation ->
+    (network_setLiftMultiple_setMove_conjure_aux47 = network_setLiftMultiple_setMove_conjure_aux49 \/
+     network_setLiftMultiple_setMove_conjure_aux48 = network_setLiftMultiple_setMove_conjure_aux49)
+    /\
+    (network_setLiftMultiple_setMove_conjure_aux47 = network_setLiftMultiple_setMove_conjure_aux50 \/
+     network_setLiftMultiple_setMove_conjure_aux48 = network_setLiftMultiple_setMove_conjure_aux50),
+    network_setLiftMultiple_setMove_activation -> true,
+    !network_setLiftMultiple_setMove_activation ->
+    and([network_setLiftMultiple_setMove_size = 1, network_setLiftMultiple_setMove_conjure_aux47 = 1,
+         network_setLiftMultiple_setMove_conjure_aux48 = 1, network_setLiftMultiple_setMove_conjure_aux49 = 1,
+         network_setLiftMultiple_setMove_conjure_aux50 = 1;
+             int(1..5)]),
+    network_setLiftMultiple_setSplit_activation -> allDiff([network_setLiftMultiple_setSplit_conjure_aux51; int(1)]),
+    network_setLiftMultiple_setSplit_activation ->
+    network_setLiftMultiple_setSplit_conjure_aux51 <= incumbent_network_ExplicitVarSizeWithMarkerR2_Marker,
+    network_setLiftMultiple_setSplit_activation ->
+    allDiff([network_setLiftMultiple_setSplit_conjure_aux52, network_setLiftMultiple_setSplit_conjure_aux53;
+                 int(1..2)]),
+    network_setLiftMultiple_setSplit_activation ->
+    network_setLiftMultiple_setSplit_conjure_aux52 <= network_ExplicitVarSizeWithMarkerR2_Marker /\
+    network_setLiftMultiple_setSplit_conjure_aux53 <= network_ExplicitVarSizeWithMarkerR2_Marker,
+    network_setLiftMultiple_setSplit_activation ->
+    and([q114 <= incumbent_network_ExplicitVarSizeWithMarkerR2_Marker /\
+         !(q114 = network_setLiftMultiple_setSplit_conjure_aux51)
+         ->
+         and([network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q114, q119] =
+              incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q114, q119]
+                  | q119 : int(1..nnodes)])
+             | q114 : int(1..nrings)]),
+    network_setLiftMultiple_setSplit_activation ->
+    and([and([network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                  [network_setLiftMultiple_setSplit_conjure_aux52, q121]
+              ->
+              incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                  [network_setLiftMultiple_setSplit_conjure_aux51, q121]
+                  | q121 : int(1..nnodes)]),
+         sum([toInt(incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                        [network_setLiftMultiple_setSplit_conjure_aux51, q122])
+                  | q122 : int(1..nnodes)])
+         -
+         sum([toInt(network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                        [network_setLiftMultiple_setSplit_conjure_aux52, q123])
+                  | q123 : int(1..nnodes)])
+         = network_setLiftMultiple_setSplit_size,
+         sum([toInt(network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                        [network_setLiftMultiple_setSplit_conjure_aux53, q124])
+                  | q124 : int(1..nnodes)])
+         = network_setLiftMultiple_setSplit_size,
+         and([incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                  [network_setLiftMultiple_setSplit_conjure_aux51, q3]
+              /\
+              !network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[network_setLiftMultiple_setSplit_conjure_aux52, q3]
+              ->
+              network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[network_setLiftMultiple_setSplit_conjure_aux53, q3]
+                  | q3 : int(1..nnodes)]);
+             int(1..4)]),
+    network_setLiftMultiple_setSplit_activation ->
+    network_ExplicitVarSizeWithMarkerR2_Marker = incumbent_network_ExplicitVarSizeWithMarkerR2_Marker + 1,
+    network_setLiftMultiple_setSplit_activation ->
+    network_setLiftMultiple_setSplit_conjure_aux52 = network_setLiftMultiple_setSplit_conjure_aux51 \/
+    network_setLiftMultiple_setSplit_conjure_aux53 = network_setLiftMultiple_setSplit_conjure_aux51,
+    network_setLiftMultiple_setSplit_activation -> true,
+    !network_setLiftMultiple_setSplit_activation ->
+    and([network_setLiftMultiple_setSplit_size = 1, network_setLiftMultiple_setSplit_conjure_aux51 = 1,
+         network_setLiftMultiple_setSplit_conjure_aux52 = 1, network_setLiftMultiple_setSplit_conjure_aux53 = 1;
+             int(1..4)]),
+    network_setLiftSingle_setAdd_activation -> allDiff([network_setLiftSingle_setAdd_conjure_aux54; int(1)]),
+    network_setLiftSingle_setAdd_activation ->
+    network_setLiftSingle_setAdd_conjure_aux54 <= incumbent_network_ExplicitVarSizeWithMarkerR2_Marker,
+    network_setLiftSingle_setAdd_activation -> allDiff([network_setLiftSingle_setAdd_conjure_aux55; int(1)]),
+    network_setLiftSingle_setAdd_activation ->
+    network_setLiftSingle_setAdd_conjure_aux55 <= network_ExplicitVarSizeWithMarkerR2_Marker,
+    network_setLiftSingle_setAdd_activation ->
+    and([q125 <= incumbent_network_ExplicitVarSizeWithMarkerR2_Marker /\
+         !(q125 = network_setLiftSingle_setAdd_conjure_aux54)
+         ->
+         and([network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q125, q134] =
+              incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q125, q134]
+                  | q134 : int(1..nnodes)])
+             | q125 : int(1..nrings)]),
+    network_setLiftSingle_setAdd_activation ->
+    and([incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+             [network_setLiftSingle_setAdd_conjure_aux54, q136]
+         -> network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[network_setLiftSingle_setAdd_conjure_aux55, q136]
+             | q136 : int(1..nnodes)])
+    /\
+    sum([toInt(network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[network_setLiftSingle_setAdd_conjure_aux55, q137])
+             | q137 : int(1..nnodes)])
+    -
+    sum([toInt(incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                   [network_setLiftSingle_setAdd_conjure_aux54, q138])
+             | q138 : int(1..nnodes)])
+    = network_setLiftSingle_setAdd_size,
+    network_setLiftSingle_setAdd_activation ->
+    network_ExplicitVarSizeWithMarkerR2_Marker = incumbent_network_ExplicitVarSizeWithMarkerR2_Marker,
+    network_setLiftSingle_setAdd_activation ->
+    network_setLiftSingle_setAdd_conjure_aux55 = network_setLiftSingle_setAdd_conjure_aux54,
+    network_setLiftSingle_setAdd_activation ->
+    network_setLiftSingle_setAdd_conjure_aux54 = network_setLiftSingle_setAdd_conjure_aux55,
+    network_setLiftSingle_setAdd_activation -> true,
+    !network_setLiftSingle_setAdd_activation ->
+    and([network_setLiftSingle_setAdd_size = 1, network_setLiftSingle_setAdd_conjure_aux54 = 1,
+         network_setLiftSingle_setAdd_conjure_aux55 = 1;
+             int(1..3)]),
+    network_setLiftSingle_setDiff_activation -> allDiff([network_setLiftSingle_setDiff_conjure_aux56; int(1)]),
+    network_setLiftSingle_setDiff_activation ->
+    network_setLiftSingle_setDiff_conjure_aux56 <= incumbent_network_ExplicitVarSizeWithMarkerR2_Marker,
+    network_setLiftSingle_setDiff_activation -> allDiff([network_setLiftSingle_setDiff_conjure_aux57; int(1)]),
+    network_setLiftSingle_setDiff_activation ->
+    network_setLiftSingle_setDiff_conjure_aux57 <= network_ExplicitVarSizeWithMarkerR2_Marker,
+    network_setLiftSingle_setDiff_activation ->
+    and([q139 <= incumbent_network_ExplicitVarSizeWithMarkerR2_Marker /\
+         !(q139 = network_setLiftSingle_setDiff_conjure_aux56)
+         ->
+         and([network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q139, q148] =
+              incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q139, q148]
+                  | q148 : int(1..nnodes)])
+             | q139 : int(1..nrings)]),
+    network_setLiftSingle_setDiff_activation ->
+    network_setLiftSingle_setDiff_size =
+    sum([toInt(incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                   [network_setLiftSingle_setDiff_conjure_aux56, q150]
+               /\
+               !network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                    [network_setLiftSingle_setDiff_conjure_aux57, q150])
+             | q150 : int(1..nnodes)])
+    +
+    sum([toInt(network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[network_setLiftSingle_setDiff_conjure_aux57, q151]
+               /\
+               !incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                    [network_setLiftSingle_setDiff_conjure_aux56, q151])
+             | q151 : int(1..nnodes)]),
+    network_setLiftSingle_setDiff_activation ->
+    network_ExplicitVarSizeWithMarkerR2_Marker = incumbent_network_ExplicitVarSizeWithMarkerR2_Marker,
+    network_setLiftSingle_setDiff_activation ->
+    network_setLiftSingle_setDiff_conjure_aux57 = network_setLiftSingle_setDiff_conjure_aux56,
+    network_setLiftSingle_setDiff_activation ->
+    network_setLiftSingle_setDiff_conjure_aux56 = network_setLiftSingle_setDiff_conjure_aux57,
+    network_setLiftSingle_setDiff_activation -> true,
+    !network_setLiftSingle_setDiff_activation ->
+    and([network_setLiftSingle_setDiff_size = 1, network_setLiftSingle_setDiff_conjure_aux56 = 1,
+         network_setLiftSingle_setDiff_conjure_aux57 = 1;
+             int(1..3)]),
+    network_setLiftSingle_setRemove_activation -> allDiff([network_setLiftSingle_setRemove_conjure_aux58; int(1)]),
+    network_setLiftSingle_setRemove_activation ->
+    network_setLiftSingle_setRemove_conjure_aux58 <= incumbent_network_ExplicitVarSizeWithMarkerR2_Marker,
+    network_setLiftSingle_setRemove_activation -> allDiff([network_setLiftSingle_setRemove_conjure_aux59; int(1)]),
+    network_setLiftSingle_setRemove_activation ->
+    network_setLiftSingle_setRemove_conjure_aux59 <= network_ExplicitVarSizeWithMarkerR2_Marker,
+    network_setLiftSingle_setRemove_activation ->
+    and([q152 <= incumbent_network_ExplicitVarSizeWithMarkerR2_Marker /\
+         !(q152 = network_setLiftSingle_setRemove_conjure_aux58)
+         ->
+         and([network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q152, q161] =
+              incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q152, q161]
+                  | q161 : int(1..nnodes)])
+             | q152 : int(1..nrings)]),
+    network_setLiftSingle_setRemove_activation ->
+    and([network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[network_setLiftSingle_setRemove_conjure_aux59, q163] ->
+         incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+             [network_setLiftSingle_setRemove_conjure_aux58, q163]
+             | q163 : int(1..nnodes)])
+    /\
+    sum([toInt(incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                   [network_setLiftSingle_setRemove_conjure_aux58, q164])
+             | q164 : int(1..nnodes)])
+    -
+    sum([toInt(network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                   [network_setLiftSingle_setRemove_conjure_aux59, q165])
+             | q165 : int(1..nnodes)])
+    = network_setLiftSingle_setRemove_size,
+    network_setLiftSingle_setRemove_activation ->
+    network_ExplicitVarSizeWithMarkerR2_Marker = incumbent_network_ExplicitVarSizeWithMarkerR2_Marker,
+    network_setLiftSingle_setRemove_activation ->
+    network_setLiftSingle_setRemove_conjure_aux59 = network_setLiftSingle_setRemove_conjure_aux58,
+    network_setLiftSingle_setRemove_activation ->
+    network_setLiftSingle_setRemove_conjure_aux58 = network_setLiftSingle_setRemove_conjure_aux59,
+    network_setLiftSingle_setRemove_activation -> true,
+    !network_setLiftSingle_setRemove_activation ->
+    and([network_setLiftSingle_setRemove_size = 1, network_setLiftSingle_setRemove_conjure_aux58 = 1,
+         network_setLiftSingle_setRemove_conjure_aux59 = 1;
+             int(1..3)]),
+    network_setLiftSingle_setSwap_activation -> allDiff([network_setLiftSingle_setSwap_conjure_aux60; int(1)]),
+    network_setLiftSingle_setSwap_activation ->
+    network_setLiftSingle_setSwap_conjure_aux60 <= incumbent_network_ExplicitVarSizeWithMarkerR2_Marker,
+    network_setLiftSingle_setSwap_activation -> allDiff([network_setLiftSingle_setSwap_conjure_aux61; int(1)]),
+    network_setLiftSingle_setSwap_activation ->
+    network_setLiftSingle_setSwap_conjure_aux61 <= network_ExplicitVarSizeWithMarkerR2_Marker,
+    network_setLiftSingle_setSwap_activation ->
+    and([q166 <= incumbent_network_ExplicitVarSizeWithMarkerR2_Marker /\
+         !(q166 = network_setLiftSingle_setSwap_conjure_aux60)
+         ->
+         and([network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q166, q175] =
+              incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q166, q175]
+                  | q175 : int(1..nnodes)])
+             | q166 : int(1..nrings)]),
+    network_setLiftSingle_setSwap_activation ->
+    sum([toInt(network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[network_setLiftSingle_setSwap_conjure_aux61, q177]
+               /\
+               !incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                    [network_setLiftSingle_setSwap_conjure_aux60, q177])
+             | q177 : int(1..nnodes)])
+    = network_setLiftSingle_setSwap_size
+    /\
+    sum([toInt(incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                   [network_setLiftSingle_setSwap_conjure_aux60, q178])
+             | q178 : int(1..nnodes)])
+    =
+    sum([toInt(network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[network_setLiftSingle_setSwap_conjure_aux61, q179])
+             | q179 : int(1..nnodes)]),
+    network_setLiftSingle_setSwap_activation ->
+    network_ExplicitVarSizeWithMarkerR2_Marker = incumbent_network_ExplicitVarSizeWithMarkerR2_Marker,
+    network_setLiftSingle_setSwap_activation ->
+    network_setLiftSingle_setSwap_conjure_aux61 = network_setLiftSingle_setSwap_conjure_aux60,
+    network_setLiftSingle_setSwap_activation ->
+    network_setLiftSingle_setSwap_conjure_aux60 = network_setLiftSingle_setSwap_conjure_aux61,
+    network_setLiftSingle_setSwap_activation -> true,
+    !network_setLiftSingle_setSwap_activation ->
+    and([network_setLiftSingle_setSwap_size = 1, network_setLiftSingle_setSwap_conjure_aux60 = 1,
+         network_setLiftSingle_setSwap_conjure_aux61 = 1;
+             int(1..3)]),
+    network_setLiftSingle_setSwapAdd_activation -> allDiff([network_setLiftSingle_setSwapAdd_conjure_aux62; int(1)]),
+    network_setLiftSingle_setSwapAdd_activation ->
+    network_setLiftSingle_setSwapAdd_conjure_aux62 <= incumbent_network_ExplicitVarSizeWithMarkerR2_Marker,
+    network_setLiftSingle_setSwapAdd_activation -> allDiff([network_setLiftSingle_setSwapAdd_conjure_aux63; int(1)]),
+    network_setLiftSingle_setSwapAdd_activation ->
+    network_setLiftSingle_setSwapAdd_conjure_aux63 <= network_ExplicitVarSizeWithMarkerR2_Marker,
+    network_setLiftSingle_setSwapAdd_activation ->
+    and([q180 <= incumbent_network_ExplicitVarSizeWithMarkerR2_Marker /\
+         !(q180 = network_setLiftSingle_setSwapAdd_conjure_aux62)
+         ->
+         and([network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q180, q189] =
+              incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q180, q189]
+                  | q189 : int(1..nnodes)])
+             | q180 : int(1..nrings)]),
+    network_setLiftSingle_setSwapAdd_activation ->
+    sum([toInt(network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                   [network_setLiftSingle_setSwapAdd_conjure_aux63, q191]
+               /\
+               !incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                    [network_setLiftSingle_setSwapAdd_conjure_aux62, q191])
+             | q191 : int(1..nnodes)])
+    = network_setLiftSingle_setSwapAdd_size
+    /\
+    sum([toInt(network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                   [network_setLiftSingle_setSwapAdd_conjure_aux63, q192])
+             | q192 : int(1..nnodes)])
+    >=
+    sum([toInt(incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                   [network_setLiftSingle_setSwapAdd_conjure_aux62, q193])
+             | q193 : int(1..nnodes)]),
+    network_setLiftSingle_setSwapAdd_activation ->
+    network_ExplicitVarSizeWithMarkerR2_Marker = incumbent_network_ExplicitVarSizeWithMarkerR2_Marker,
+    network_setLiftSingle_setSwapAdd_activation ->
+    network_setLiftSingle_setSwapAdd_conjure_aux63 = network_setLiftSingle_setSwapAdd_conjure_aux62,
+    network_setLiftSingle_setSwapAdd_activation ->
+    network_setLiftSingle_setSwapAdd_conjure_aux62 = network_setLiftSingle_setSwapAdd_conjure_aux63,
+    network_setLiftSingle_setSwapAdd_activation -> true,
+    !network_setLiftSingle_setSwapAdd_activation ->
+    and([network_setLiftSingle_setSwapAdd_size = 1, network_setLiftSingle_setSwapAdd_conjure_aux62 = 1,
+         network_setLiftSingle_setSwapAdd_conjure_aux63 = 1;
+             int(1..3)]),
+    network_setLiftSingle_setSwapRemove_activation ->
+    allDiff([network_setLiftSingle_setSwapRemove_conjure_aux64; int(1)]),
+    network_setLiftSingle_setSwapRemove_activation ->
+    network_setLiftSingle_setSwapRemove_conjure_aux64 <= incumbent_network_ExplicitVarSizeWithMarkerR2_Marker,
+    network_setLiftSingle_setSwapRemove_activation ->
+    allDiff([network_setLiftSingle_setSwapRemove_conjure_aux65; int(1)]),
+    network_setLiftSingle_setSwapRemove_activation ->
+    network_setLiftSingle_setSwapRemove_conjure_aux65 <= network_ExplicitVarSizeWithMarkerR2_Marker,
+    network_setLiftSingle_setSwapRemove_activation ->
+    and([q194 <= incumbent_network_ExplicitVarSizeWithMarkerR2_Marker /\
+         !(q194 = network_setLiftSingle_setSwapRemove_conjure_aux64)
+         ->
+         and([network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q194, q203] =
+              incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q194, q203]
+                  | q203 : int(1..nnodes)])
+             | q194 : int(1..nrings)]),
+    network_setLiftSingle_setSwapRemove_activation ->
+    sum([toInt(incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                   [network_setLiftSingle_setSwapRemove_conjure_aux64, q205]
+               /\
+               !network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                    [network_setLiftSingle_setSwapRemove_conjure_aux65, q205])
+             | q205 : int(1..nnodes)])
+    = network_setLiftSingle_setSwapRemove_size
+    /\
+    sum([toInt(network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                   [network_setLiftSingle_setSwapRemove_conjure_aux65, q206])
+             | q206 : int(1..nnodes)])
+    <=
+    sum([toInt(incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                   [network_setLiftSingle_setSwapRemove_conjure_aux64, q207])
+             | q207 : int(1..nnodes)]),
+    network_setLiftSingle_setSwapRemove_activation ->
+    network_ExplicitVarSizeWithMarkerR2_Marker = incumbent_network_ExplicitVarSizeWithMarkerR2_Marker,
+    network_setLiftSingle_setSwapRemove_activation ->
+    network_setLiftSingle_setSwapRemove_conjure_aux65 = network_setLiftSingle_setSwapRemove_conjure_aux64,
+    network_setLiftSingle_setSwapRemove_activation ->
+    network_setLiftSingle_setSwapRemove_conjure_aux64 = network_setLiftSingle_setSwapRemove_conjure_aux65,
+    network_setLiftSingle_setSwapRemove_activation -> true,
+    !network_setLiftSingle_setSwapRemove_activation ->
+    and([network_setLiftSingle_setSwapRemove_size = 1, network_setLiftSingle_setSwapRemove_conjure_aux64 = 1,
+         network_setLiftSingle_setSwapRemove_conjure_aux65 = 1;
+             int(1..3)]),
+    network_setRemoveSingle_activation ->
+    allDiff([network_setRemoveSingle_conjure_aux66, network_setRemoveSingle_conjure_aux67; int(1..2)]),
+    network_setRemoveSingle_activation ->
+    network_setRemoveSingle_conjure_aux66 <= incumbent_network_ExplicitVarSizeWithMarkerR2_Marker /\
+    network_setRemoveSingle_conjure_aux67 <= incumbent_network_ExplicitVarSizeWithMarkerR2_Marker,
+    network_setRemoveSingle_activation -> allDiff([network_setRemoveSingle_conjure_aux68; int(1)]),
+    network_setRemoveSingle_activation ->
+    network_setRemoveSingle_conjure_aux68 <= network_ExplicitVarSizeWithMarkerR2_Marker,
+    network_setRemoveSingle_activation ->
+    and([q208 <= incumbent_network_ExplicitVarSizeWithMarkerR2_Marker /\
+         !(q208 = network_setRemoveSingle_conjure_aux66 \/ q208 = network_setRemoveSingle_conjure_aux67)
+         ->
+         and([network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q208, q213] =
+              incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q208, q213]
+                  | q213 : int(1..nnodes)])
+             | q208 : int(1..nrings)]),
+    network_setRemoveSingle_activation ->
+    and([network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[network_setRemoveSingle_conjure_aux68, q215] =
+         incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[network_setRemoveSingle_conjure_aux66, q215]
+             | q215 : int(1..nnodes)])
+    /\
+    sum([toInt(incumbent_network_ExplicitVarSizeWithMarkerR2_Values_Occurrence
+                   [network_setRemoveSingle_conjure_aux67, q217])
+             | q217 : int(1..nnodes)])
+    = network_setRemoveSingle_size,
+    network_setRemoveSingle_activation ->
+    network_ExplicitVarSizeWithMarkerR2_Marker = incumbent_network_ExplicitVarSizeWithMarkerR2_Marker + -1,
+    network_setRemoveSingle_activation ->
+    network_setRemoveSingle_conjure_aux66 = network_setRemoveSingle_conjure_aux68 \/
+    network_setRemoveSingle_conjure_aux67 = network_setRemoveSingle_conjure_aux68,
+    network_setRemoveSingle_activation -> true,
+    !network_setRemoveSingle_activation ->
+    and([network_setRemoveSingle_size = 1, network_setRemoveSingle_conjure_aux66 = 1,
+         network_setRemoveSingle_conjure_aux67 = 1, network_setRemoveSingle_conjure_aux68 = 1;
+             int(1..4)]),
+    and([and([q5 <= network_ExplicitVarSizeWithMarkerR2_Marker ->
+              or([network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q4, q9] !=
+                  network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q5, q9]
+                      | q9 : int(1..nnodes)])
+              \/
+              or([network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q4, q9] !=
+                  network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q5, q9]
+                      | q9 : int(1..nnodes)])
+                  | q5 : int(q4 + 1..nrings)])
+             | q4 : int(1..nrings)]),
+    and([q6 > network_ExplicitVarSizeWithMarkerR2_Marker ->
+         and([network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q6, q10] = false | q10 : int(1..nnodes)])
+             | q6 : int(1..nrings)]),
+    network_ExplicitVarSizeWithMarkerR2_Marker <= nrings,
+    and([q7 <= network_ExplicitVarSizeWithMarkerR2_Marker ->
+         2 <= sum([toInt(network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q7, q8]) | q8 : int(1..nnodes)])
+             | q7 : int(1..nrings)]),
+    and([q7 <= network_ExplicitVarSizeWithMarkerR2_Marker ->
+         sum([toInt(network_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q7, q8]) | q8 : int(1..nnodes)]) <= capacity
+             | q7 : int(1..nrings)])
+
+$ Conjure's
+$ {"finds": [{"Name": "network"}, {"Name": "optVar"}],
+$  "givens": [{"Name": "nnodes"}, {"Name": "nrings"}, {"Name": "capacity"}, {"Name": "demand"}],
+$  "enumGivens": [],
+$  "enumLettings": [],
+$  "lettings":
+$      [[{"Name": "Nodes"},
+$        {"Domain":
+$             {"DomainInt":
+$                  [{"TagInt": []},
+$                   [{"RangeBounded":
+$                         [{"Constant": {"ConstantInt": [{"TagInt": []}, 1]}},
+$                          {"Reference":
+$                               [{"Name": "nnodes"},
+$                                {"DeclNoRepr":
+$                                     ["Given", {"Name": "nnodes"},
+$                                      {"DomainInt":
+$                                           [{"TagInt": []},
+$                                            [{"RangeLowerBounded":
+$                                                  {"Constant": {"ConstantInt": [{"TagInt": []}, 1]}}}]]},
+$                                      {"NoRegion": []}]}]}]}]]}}],
+$       [{"MachineName": ["let", 1, []]},
+$        {"Op":
+$             {"MkOpProduct":
+$                  {"AbstractLiteral":
+$                       {"AbsLitMatrix":
+$                            [{"DomainInt":
+$                                  [{"TagInt": []},
+$                                   [{"RangeBounded":
+$                                         [{"Constant": {"ConstantInt": [{"TagInt": []}, 1]}},
+$                                          {"Constant": {"ConstantInt": [{"TagInt": []}, 2]}}]}]]},
+$                             [{"Reference":
+$                                   [{"Name": "nrings"},
+$                                    {"DeclNoRepr":
+$                                         ["Given", {"Name": "nrings"},
+$                                          {"DomainInt":
+$                                               [{"TagInt": []},
+$                                                [{"RangeLowerBounded":
+$                                                      {"Constant": {"ConstantInt": [{"TagInt": []}, 1]}}}]]},
+$                                          {"NoRegion": []}]}]},
+$                              {"Reference":
+$                                   [{"Name": "capacity"},
+$                                    {"DeclNoRepr":
+$                                         ["Given", {"Name": "capacity"},
+$                                          {"DomainInt":
+$                                               [{"TagInt": []},
+$                                                [{"RangeLowerBounded":
+$                                                      {"Constant": {"ConstantInt": [{"TagInt": []}, 1]}}}]]},
+$                                          {"NoRegion": []}]}]}]]}}}}]],
+$  "unnameds": [],
+$  "strategyQ": {"PickFirst": []},
+$  "strategyA": {"Compact": []},
+$  "trailCompact":
+$      [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 8],
+$       [1, 1, 8], [1, 1, 1], [1, 1, 8], [1, 1, 1], [1, 1, 8], [1, 1, 1], [1, 1, 8], [1, 1, 8], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 8], [1, 1, 8], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 8], [1, 1, 8], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 8], [1, 1, 8], [1, 1, 1], [1, 1, 1], [1, 1, 8], [1, 1, 8], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 8], [1, 1, 8], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 8], [1, 1, 8], [1, 1, 1], [1, 1, 1], [1, 1, 8],
+$       [1, 1, 8], [1, 1, 1], [1, 1, 1], [1, 1, 8], [1, 1, 8], [1, 1, 1], [1, 1, 1], [1, 1, 8], [1, 1, 8], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 8], [1, 1, 8], [1, 1, 1], [1, 1, 1], [1, 1, 8], [1, 1, 8], [1, 1, 1], [1, 1, 1], [1, 1, 8],
+$       [1, 1, 8], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$       [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1]],
+$  "trailVerbose": [],
+$  "trailRewrites": [],
+$  "nameGenState": [["conjure_aux", 69], ["fin", 2], ["let", 2], ["q", 218]],
+$  "nbExtraGivens": 1,
+$  "representations":
+$      [[{"MachineName": ["fin", 1, []]}, {"DomainInt": [{"TagInt": []}, []]}],
+$       [{"Name": "nnodes"},
+$        {"DomainInt": [{"TagInt": []}, [{"RangeLowerBounded": {"Constant": {"ConstantInt": [{"TagInt": []}, 1]}}}]]}],
+$       [{"Name": "nrings"},
+$        {"DomainInt": [{"TagInt": []}, [{"RangeLowerBounded": {"Constant": {"ConstantInt": [{"TagInt": []}, 1]}}}]]}],
+$       [{"Name": "capacity"},
+$        {"DomainInt": [{"TagInt": []}, [{"RangeLowerBounded": {"Constant": {"ConstantInt": [{"TagInt": []}, 1]}}}]]}],
+$       [{"Name": "optVar"},
+$        {"DomainInt":
+$             [{"TagInt": []},
+$              [{"RangeBounded":
+$                    [{"Constant": {"ConstantInt": [{"TagInt": []}, 0]}},
+$                     {"Reference":
+$                          [{"MachineName": ["let", 1, []]},
+$                           {"Alias":
+$                                {"Op":
+$                                     {"MkOpProduct":
+$                                          {"AbstractLiteral":
+$                                               {"AbsLitMatrix":
+$                                                    [{"DomainInt":
+$                                                          [{"TagInt": []},
+$                                                           [{"RangeBounded":
+$                                                                 [{"Constant": {"ConstantInt": [{"TagInt": []}, 1]}},
+$                                                                  {"Constant":
+$                                                                       {"ConstantInt": [{"TagInt": []}, 2]}}]}]]},
+$                                                     [{"Reference":
+$                                                           [{"Name": "nrings"},
+$                                                            {"DeclHasRepr":
+$                                                                 ["Given", {"Name": "nrings"},
+$                                                                  {"DomainInt":
+$                                                                       [{"TagInt": []},
+$                                                                        [{"RangeLowerBounded":
+$                                                                              {"Constant":
+$                                                                                   {"ConstantInt":
+$                                                                                        [{"TagInt": []}, 1]}}}]]}]}]},
+$                                                      {"Reference":
+$                                                           [{"Name": "capacity"},
+$                                                            {"DeclHasRepr":
+$                                                                 ["Given", {"Name": "capacity"},
+$                                                                  {"DomainInt":
+$                                                                       [{"TagInt": []},
+$                                                                        [{"RangeLowerBounded":
+$                                                                              {"Constant":
+$                                                                                   {"ConstantInt":
+$                                                                                        [{"TagInt": []},
+$                                                                                         1]}}}]]}]}]}]]}}}}}]}]}]]}],
+$       [{"Name": "network"},
+$        {"DomainSet":
+$             [{"Set_ExplicitVarSizeWithMarker": []},
+$              {"SizeAttr_MaxSize":
+$                   {"Reference":
+$                        [{"Name": "nrings"},
+$                         {"DeclHasRepr":
+$                              ["Given", {"Name": "nrings"},
+$                               {"DomainInt":
+$                                    [{"TagInt": []},
+$                                     [{"RangeLowerBounded": {"Constant": {"ConstantInt": [{"TagInt": []}, 1]}}}]]}]}]}},
+$              {"DomainSet":
+$                   [{"Set_Occurrence": []},
+$                    {"SizeAttr_MinMaxSize":
+$                         [{"Constant": {"ConstantInt": [{"TagInt": []}, 2]}},
+$                          {"Reference":
+$                               [{"Name": "capacity"},
+$                                {"DeclHasRepr":
+$                                     ["Given", {"Name": "capacity"},
+$                                      {"DomainInt":
+$                                           [{"TagInt": []},
+$                                            [{"RangeLowerBounded":
+$                                                  {"Constant": {"ConstantInt": [{"TagInt": []}, 1]}}}]]}]}]}]},
+$                    {"DomainInt":
+$                         [{"TagInt": []},
+$                          [{"RangeBounded":
+$                                [{"Constant": {"ConstantInt": [{"TagInt": []}, 1]}},
+$                                 {"Reference":
+$                                      [{"Name": "nnodes"},
+$                                       {"DeclHasRepr":
+$                                            ["Given", {"Name": "nnodes"},
+$                                             {"DomainInt":
+$                                                  [{"TagInt": []},
+$                                                   [{"RangeLowerBounded":
+$                                                         {"Constant":
+$                                                              {"ConstantInt": [{"TagInt": []}, 1]}}}]]}]}]}]}]]}]}]}],
+$       [{"Name": "demand"},
+$        {"DomainSet":
+$             [{"Set_Explicit": []},
+$              {"SizeAttr_Size":
+$                   {"Reference":
+$                        [{"MachineName": ["fin", 1, []]},
+$                         {"DeclHasRepr":
+$                              ["Given", {"MachineName": ["fin", 1, []]}, {"DomainInt": [{"TagInt": []}, []]}]}]}},
+$              {"DomainSet":
+$                   [{"Set_Explicit": []}, {"SizeAttr_Size": {"Constant": {"ConstantInt": [{"TagInt": []}, 2]}}},
+$                    {"DomainInt":
+$                         [{"TagInt": []},
+$                          [{"RangeBounded":
+$                                [{"Constant": {"ConstantInt": [{"TagInt": []}, 1]}},
+$                                 {"Reference":
+$                                      [{"Name": "nnodes"},
+$                                       {"DeclHasRepr":
+$                                            ["Given", {"Name": "nnodes"},
+$                                             {"DomainInt":
+$                                                  [{"TagInt": []},
+$                                                   [{"RangeLowerBounded":
+$                                                         {"Constant":
+$                                                              {"ConstantInt": [{"TagInt": []}, 1]}}}]]}]}]}]}]]}]}]}],
+$       [{"Name": "size"},
+$        {"DomainInt":
+$             [{"TagInt": []},
+$              [{"RangeBounded":
+$                    [{"Constant": {"ConstantInt": [{"TagInt": []}, 1]}},
+$                     {"Reference":
+$                          [{"Name": "nrings"},
+$                           {"DeclHasRepr":
+$                                ["Given", {"Name": "nrings"},
+$                                 {"DomainInt":
+$                                      [{"TagInt": []},
+$                                       [{"RangeLowerBounded":
+$                                             {"Constant": {"ConstantInt": [{"TagInt": []}, 1]}}}]]}]}]}]}]]}]],
+$  "representationsTree":
+$      [[{"Name": "capacity"},
+$        [{"rootLabel": null,
+$          "subForest": []}]],
+$       [{"Name": "demand"},
+$        [{"rootLabel": {"Set_Explicit": []},
+$          "subForest":
+$              [{"rootLabel": {"Set_Explicit": []},
+$                "subForest":
+$                    [{"rootLabel": null,
+$                      "subForest": []}]}]}]],
+$       [{"MachineName": ["fin", 1, []]},
+$        [{"rootLabel": null,
+$          "subForest": []}]],
+$       [{"Name": "network"},
+$        [{"rootLabel": {"Set_ExplicitVarSizeWithMarker": []},
+$          "subForest":
+$              [{"rootLabel": {"Set_Occurrence": []},
+$                "subForest":
+$                    [{"rootLabel": null,
+$                      "subForest": []}]}]}]],
+$       [{"Name": "nnodes"},
+$        [{"rootLabel": null,
+$          "subForest": []}]],
+$       [{"Name": "nrings"},
+$        [{"rootLabel": null,
+$          "subForest": []}]],
+$       [{"Name": "optVar"},
+$        [{"rootLabel": null,
+$          "subForest": []}]],
+$       [{"Name": "size"},
+$        [{"rootLabel": null,
+$          "subForest": []}]]],
+$  "originalDomains":
+$      [[{"Name": "nnodes"},
+$        {"DomainInt": [{"TagInt": []}, [{"RangeLowerBounded": {"Constant": {"ConstantInt": [{"TagInt": []}, 1]}}}]]}],
+$       [{"Name": "nrings"},
+$        {"DomainInt": [{"TagInt": []}, [{"RangeLowerBounded": {"Constant": {"ConstantInt": [{"TagInt": []}, 1]}}}]]}],
+$       [{"Name": "capacity"},
+$        {"DomainInt": [{"TagInt": []}, [{"RangeLowerBounded": {"Constant": {"ConstantInt": [{"TagInt": []}, 1]}}}]]}],
+$       [{"Name": "demand"},
+$        {"DomainSet":
+$             [[], {"SizeAttr_None": []},
+$              {"DomainSet":
+$                   [[], {"SizeAttr_Size": {"Constant": {"ConstantInt": [{"TagInt": []}, 2]}}},
+$                    {"DomainInt":
+$                         [{"TagInt": []},
+$                          [{"RangeBounded":
+$                                [{"Constant": {"ConstantInt": [{"TagInt": []}, 1]}},
+$                                 {"Reference": [{"Name": "nnodes"}, null]}]}]]}]}]}],
+$       [{"Name": "network"},
+$        {"DomainSet":
+$             [[], {"SizeAttr_MaxSize": {"Reference": [{"Name": "nrings"}, null]}},
+$              {"DomainSet":
+$                   [[],
+$                    {"SizeAttr_MinMaxSize":
+$                         [{"Constant": {"ConstantInt": [{"TagInt": []}, 2]}},
+$                          {"Reference": [{"Name": "capacity"}, null]}]},
+$                    {"DomainInt":
+$                         [{"TagInt": []},
+$                          [{"RangeBounded":
+$                                [{"Constant": {"ConstantInt": [{"TagInt": []}, 1]}},
+$                                 {"Reference": [{"Name": "nnodes"}, null]}]}]]}]}]}],
+$       [{"Name": "optVar"},
+$        {"DomainInt":
+$             [{"TagInt": []},
+$              [{"RangeBounded":
+$                    [{"Constant": {"ConstantInt": [{"TagInt": []}, 0]}},
+$                     {"Reference": [{"MachineName": ["let", 1, []]}, null]}]}]]}]],
+$  "questionAnswered": []}
