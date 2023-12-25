@@ -1,0 +1,2 @@
+78 TSP instances (with <=1000 cites) taken from TSPLIB:
+G. Reinelt, Tsplib95, Interdisziplin ̈ares Zentrum fu ̈r Wissenschaftliches Rechnen (IWR), Heidelberg 338 (1995).

@@ -1,0 +1,4 @@
+88 CVRP instances from Augerat 1995 – Sets A, B, and P, Christofides and Eilon 1969 – Set E., Fisher-1994-Set-F, Christofides-et-al.-1979, Christofides-et-al.-1979-Set-M, taken from VRP-REP:
+
+J. E. Mendoza, C. Gu ́eret, M. Hoskins, H. Lobit, V. Pillac, T. Vidal, D. Vigo, Vrp-rep: the vehicle routing community repository, in: Third Meeting of the EURO Working Group on Vehicle Routing and Logistics Optimization (VeRoLog). Oslo, Norway, 2014
+

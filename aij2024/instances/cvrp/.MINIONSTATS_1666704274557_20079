@@ -1,0 +1,2 @@
+#"CommandLineArguments" "Filename" "InitialPropagate" "MinionVersion" "Nodes" "ParsingTime" "Preprocess" "PreprocessTime" "RandomSeed" "Satisfiable" "SetupTime" "SolutionsFound" "SolveTime" "TimeOut" "TotalTime" 
+conjure-output/model000001-eil13.eprime-minion,-printsolsonly,-preprocess,SACBounds_limit,-tableout,.MINIONSTATS_1666704274557_20079,-solsout,.MINIONSOLS_1666704274557_20079,-noprintsols conjure-output/model000001-eil13.eprime-minion 1.5e-05 -1 404540 0.005472 SACBounds_limit 0.558525 1799970823 1 0.007044 11 16.3339 0 16.9049 

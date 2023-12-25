@@ -1,0 +1,177 @@
+language ESSENCE' 1.0
+
+given items_EnumSize: int
+given fin1: int
+given fin2: int
+given fin3: int
+given weights_Function1D: matrix indexed by [int(1..items_EnumSize)] of int(fin2..fin3)
+given binSize: int
+find packing_PartitionAsSet_ExplicitVarSizeWithMarkerR2_Marker: int(0..items_EnumSize)
+find packing_PartitionAsSet_ExplicitVarSizeWithMarkerR2_Values_Occurrence:
+        matrix indexed by [int(1..items_EnumSize), int(1..items_EnumSize)] of bool
+minimising sum([toInt(q21 <= packing_PartitionAsSet_ExplicitVarSizeWithMarkerR2_Marker) | q21 : int(1..items_EnumSize)])
+such that
+    and([q15 <= packing_PartitionAsSet_ExplicitVarSizeWithMarkerR2_Marker ->
+         binSize >=
+         sum([toInt(packing_PartitionAsSet_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q15, i]) *
+              catchUndef(weights_Function1D[i], 0)
+                  | i : int(1..items_EnumSize)])
+             | q15 : int(1..items_EnumSize)]),
+    alldifferent_except([toInt(q16 <= packing_PartitionAsSet_ExplicitVarSizeWithMarkerR2_Marker /\
+                               packing_PartitionAsSet_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q16, q2])
+                         * catchUndef(q2, 0)
+                             | q16 : int(1..items_EnumSize), q2 : int(1..items_EnumSize)],
+                        0),
+    and([q17 <= packing_PartitionAsSet_ExplicitVarSizeWithMarkerR2_Marker ->
+         sum([toInt(packing_PartitionAsSet_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q17, q18])
+                  | q18 : int(1..items_EnumSize)])
+         >= 1
+             | q17 : int(1..items_EnumSize)]),
+    and([and([q5 <= packing_PartitionAsSet_ExplicitVarSizeWithMarkerR2_Marker ->
+              or([packing_PartitionAsSet_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q4, q10] /\
+                  !packing_PartitionAsSet_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q5, q10]
+                      | q10 : int(1..items_EnumSize)])
+              \/
+              or([packing_PartitionAsSet_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q5, q10] /\
+                  !packing_PartitionAsSet_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q4, q10]
+                      | q10 : int(1..items_EnumSize)])
+                  | q5 : int(q4 + 1..items_EnumSize)])
+             | q4 : int(1..items_EnumSize)]),
+    and([q6 > packing_PartitionAsSet_ExplicitVarSizeWithMarkerR2_Marker ->
+         and([packing_PartitionAsSet_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q6, q11] = false
+                  | q11 : int(1..items_EnumSize)])
+             | q6 : int(1..items_EnumSize)]),
+    packing_PartitionAsSet_ExplicitVarSizeWithMarkerR2_Marker <= items_EnumSize,
+    and([q7 <= packing_PartitionAsSet_ExplicitVarSizeWithMarkerR2_Marker ->
+         sum([toInt(packing_PartitionAsSet_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q7, q8])
+                  | q8 : int(1..items_EnumSize)])
+         <= items_EnumSize
+             | q7 : int(1..items_EnumSize)]),
+    items_EnumSize =
+    sum([toInt(q12 <= packing_PartitionAsSet_ExplicitVarSizeWithMarkerR2_Marker) *
+         catchUndef(sum([toInt(packing_PartitionAsSet_ExplicitVarSizeWithMarkerR2_Values_Occurrence[q12, q13])
+                             | q13 : int(1..items_EnumSize)]),
+                    0)
+             | q12 : int(1..items_EnumSize)])
+
+$ Conjure's
+$ {"finds": [{"Name": "packing"}],
+$  "givens": [{"Name": "weights"}, {"Name": "binSize"}],
+$  "enumGivens": [{"Name": "items"}],
+$  "enumLettings": [],
+$  "lettings": [[{"Name": "items"},
+$                {"Domain": {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                            {"Reference": [{"Name": "items_EnumSize"},
+$                                                                           {"DeclNoRepr": ["Given",
+$                                                                                           {"Name": "items_EnumSize"},
+$                                                                                           {"DomainInt": []},
+$                                                                                           {"NoRegion": []}]}]}]}]}}]],
+$  "unnameds": [],
+$  "strategyQ": {"PickFirst": []},
+$  "strategyA": {"Compact": []},
+$  "trailCompact": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 4], [1, 1, 1], [1, 1, 1], [1, 1, 4],
+$                   [1, 1, 4], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1]],
+$  "trailVerbose": [],
+$  "trailRewrites": [],
+$  "nameGenState": [["fin", 4], ["q", 22]],
+$  "nbExtraGivens": 3,
+$  "representations": [[{"MachineName": ["fin", 1, []]}, {"DomainInt": []}],
+$                      [{"Name": "items_EnumSize"}, {"DomainInt": []}],
+$                      [{"MachineName": ["fin", 2, []]}, {"DomainInt": []}],
+$                      [{"MachineName": ["fin", 3, []]}, {"DomainInt": []}],
+$                      [{"Name": "packing"},
+$                       {"DomainPartition": [{"Partition_AsSet": [{"Set_ExplicitVarSizeWithMarker": []},
+$                                                                 {"Set_Occurrence": []}]},
+$                                            {"isRegular": false,
+$                                             "partsNum": {"SizeAttr_MaxSize": {"Reference": [{"Name": "items_EnumSize"},
+$                                                                                             {"DeclHasRepr": ["Given",
+$                                                                                                              {"Name": "items_EnumSize"},
+$                                                                                                              {"DomainInt": []}]}]}},
+$                                             "partsSize": {"SizeAttr_MaxSize": {"Reference": [{"Name": "items_EnumSize"},
+$                                                                                              {"DeclHasRepr": ["Given",
+$                                                                                                               {"Name": "items_EnumSize"},
+$                                                                                                               {"DomainInt": []}]}]}}},
+$                                            {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                             {"Reference": [{"Name": "items_EnumSize"},
+$                                                                                            {"DeclHasRepr": ["Given",
+$                                                                                                             {"Name": "items_EnumSize"},
+$                                                                                                             {"DomainInt": []}]}]}]}]}]}],
+$                      [{"Name": "binSize"}, {"DomainInt": []}],
+$                      [{"Name": "weights"},
+$                       {"DomainFunction": [{"Function_1D": []},
+$                                           [{"SizeAttr_Size": {"Reference": [{"MachineName": ["fin", 1, []]},
+$                                                                             {"DeclHasRepr": ["Given",
+$                                                                                              {"MachineName": ["fin", 1,
+$                                                                                                               []]},
+$                                                                                              {"DomainInt": []}]}]}},
+$                                            "PartialityAttr_Total", "JectivityAttr_None"],
+$                                           {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                            {"Reference": [{"Name": "items_EnumSize"},
+$                                                                                           {"DeclHasRepr": ["Given",
+$                                                                                                            {"Name": "items_EnumSize"},
+$                                                                                                            {"DomainInt": []}]}]}]}]},
+$                                           {"DomainInt": [{"RangeBounded": [{"Reference": [{"MachineName": ["fin", 2,
+$                                                                                                            []]},
+$                                                                                           {"DeclHasRepr": ["Given",
+$                                                                                                            {"MachineName": ["fin",
+$                                                                                                                             2,
+$                                                                                                                             []]},
+$                                                                                                            {"DomainInt": []}]}]},
+$                                                                            {"Reference": [{"MachineName": ["fin", 3,
+$                                                                                                            []]},
+$                                                                                           {"DeclHasRepr": ["Given",
+$                                                                                                            {"MachineName": ["fin",
+$                                                                                                                             3,
+$                                                                                                                             []]},
+$                                                                                                            {"DomainInt": []}]}]}]}]}]}]],
+$  "representationsTree": [[{"Name": "binSize"},
+$                           [{"rootLabel": null,
+$                             "subForest": []}]],
+$                          [{"MachineName": ["fin", 1, []]},
+$                           [{"rootLabel": null,
+$                             "subForest": []}]],
+$                          [{"MachineName": ["fin", 2, []]},
+$                           [{"rootLabel": null,
+$                             "subForest": []}]],
+$                          [{"MachineName": ["fin", 3, []]},
+$                           [{"rootLabel": null,
+$                             "subForest": []}]],
+$                          [{"Name": "items_EnumSize"},
+$                           [{"rootLabel": null,
+$                             "subForest": []}]],
+$                          [{"Name": "packing"},
+$                           [{"rootLabel": {"Partition_AsSet": [{"Set_ExplicitVarSizeWithMarker": []},
+$                                                               {"Set_Occurrence": []}]},
+$                             "subForest": [{"rootLabel": null,
+$                                            "subForest": []}]}]],
+$                          [{"Name": "weights"},
+$                           [{"rootLabel": {"Function_1D": []},
+$                             "subForest": [{"rootLabel": null,
+$                                            "subForest": []},
+$                                           {"rootLabel": null,
+$                                            "subForest": []}]}]]],
+$  "originalDomains": [[{"Name": "weights"},
+$                       {"DomainFunction": [[], [{"SizeAttr_None": []}, "PartialityAttr_Total", "JectivityAttr_None"],
+$                                           {"DomainEnum": [{"Name": "items"}, null, null]}, {"DomainInt": []}]}],
+$                      [{"Name": "binSize"}, {"DomainInt": []}],
+$                      [{"Name": "packing"},
+$                       {"DomainPartition": [[],
+$                                            {"isRegular": false,
+$                                             "partsNum": {"SizeAttr_MaxSize": {"Reference": [{"Name": "items_EnumSize"},
+$                                                                                             {"DeclHasRepr": ["Given",
+$                                                                                                              {"Name": "items_EnumSize"},
+$                                                                                                              {"DomainInt": []}]}]}},
+$                                             "partsSize": {"SizeAttr_MaxSize": {"Reference": [{"Name": "items_EnumSize"},
+$                                                                                              {"DeclHasRepr": ["Given",
+$                                                                                                               {"Name": "items_EnumSize"},
+$                                                                                                               {"DomainInt": []}]}]}}},
+$                                            {"DomainEnum": [{"Name": "items"}, null, null]}]}]],
+$  "questionAnswered": []}

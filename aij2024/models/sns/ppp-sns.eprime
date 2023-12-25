@@ -1,0 +1,815 @@
+language ESSENCE' 1.0
+
+given n_boats: int(1..)
+given n_periods: int(1..)
+given fin1: int
+given fin2: int
+given capacity_Function1D: matrix indexed by [int(1..n_boats)] of int(1..fin2)
+given fin3: int
+given fin4: int
+given crew_Function1D: matrix indexed by [int(1..n_boats)] of int(1..fin4)
+find hosts_Occurrence: matrix indexed by [int(1..n_boats)] of bool
+find incumbent_hosts_Occurrence: matrix indexed by [int(1..n_boats)] of bool
+find sched_ExplicitR9_Function1D: matrix indexed by [int(1..n_periods), int(1..n_boats)] of int(1..n_boats)
+find incumbent_sched_ExplicitR9_Function1D: matrix indexed by [int(1..n_periods), int(1..n_boats)] of int(1..n_boats)
+find optVar: int(0..n_boats)
+SNSGroup hosts_neighbourhoodGroup : [hosts_Occurrence]
+find hosts_setAdd_activation: bool
+find hosts_setAdd_size: int(1..n_boats)
+SNSNeighbourhood hosts_setAdd : (hosts_setAdd_size, hosts_setAdd_activation, hosts_neighbourhoodGroup, [])
+find hosts_setDiff_activation: bool
+find hosts_setDiff_size: int(1..n_boats)
+SNSNeighbourhood hosts_setDiff : (hosts_setDiff_size, hosts_setDiff_activation, hosts_neighbourhoodGroup, [])
+find hosts_setRemove_activation: bool
+find hosts_setRemove_size: int(1..n_boats)
+SNSNeighbourhood hosts_setRemove : (hosts_setRemove_size, hosts_setRemove_activation, hosts_neighbourhoodGroup, [])
+find hosts_setSwap_activation: bool
+find hosts_setSwap_size: int(1..n_boats)
+SNSNeighbourhood hosts_setSwap : (hosts_setSwap_size, hosts_setSwap_activation, hosts_neighbourhoodGroup, [])
+find hosts_setSwapAdd_activation: bool
+find hosts_setSwapAdd_size: int(1..n_boats)
+SNSNeighbourhood hosts_setSwapAdd : (hosts_setSwapAdd_size, hosts_setSwapAdd_activation, hosts_neighbourhoodGroup, [])
+find hosts_setSwapRemove_activation: bool
+find hosts_setSwapRemove_size: int(1..n_boats)
+SNSNeighbourhood hosts_setSwapRemove :
+    (hosts_setSwapRemove_size, hosts_setSwapRemove_activation, hosts_neighbourhoodGroup, [])
+SNSGroup sched_neighbourhoodGroup : [sched_ExplicitR9_Function1D]
+find sched_setLiftMultiple_functionCrossOver_conjure_aux15: int(1..n_periods)
+find sched_setLiftMultiple_functionCrossOver_conjure_aux16: int(1..n_periods)
+find sched_setLiftMultiple_functionCrossOver_conjure_aux17: int(1..n_periods)
+find sched_setLiftMultiple_functionCrossOver_conjure_aux18: int(1..n_periods)
+find sched_setLiftMultiple_functionCrossOver_conjure_aux19: matrix indexed by [int(1..n_periods)] of int(0..2)
+find sched_setLiftMultiple_functionCrossOver_conjure_aux20: matrix indexed by [int(1..n_periods)] of int(-2..2)
+find sched_setLiftMultiple_functionCrossOver_activation: bool
+find sched_setLiftMultiple_functionCrossOver_size: int(1..n_boats)
+SNSNeighbourhood sched_setLiftMultiple_functionCrossOver :
+    (sched_setLiftMultiple_functionCrossOver_size, sched_setLiftMultiple_functionCrossOver_activation,
+     sched_neighbourhoodGroup,
+     [sched_setLiftMultiple_functionCrossOver_conjure_aux15, sched_setLiftMultiple_functionCrossOver_conjure_aux16,
+      sched_setLiftMultiple_functionCrossOver_conjure_aux17, sched_setLiftMultiple_functionCrossOver_conjure_aux18,
+      sched_setLiftMultiple_functionCrossOver_conjure_aux19, sched_setLiftMultiple_functionCrossOver_conjure_aux20])
+find sched_setLiftSingle_functionAnySwap_conjure_aux21: int(1..n_periods)
+find sched_setLiftSingle_functionAnySwap_conjure_aux22: int(1..n_periods)
+find sched_setLiftSingle_functionAnySwap_conjure_aux23: matrix indexed by [int(1..n_periods)] of int(0..1)
+find sched_setLiftSingle_functionAnySwap_conjure_aux24: matrix indexed by [int(1..n_periods)] of int(-1..1)
+find sched_setLiftSingle_functionAnySwap_activation: bool
+find sched_setLiftSingle_functionAnySwap_size: int(1..n_boats)
+SNSNeighbourhood sched_setLiftSingle_functionAnySwap :
+    (sched_setLiftSingle_functionAnySwap_size, sched_setLiftSingle_functionAnySwap_activation, sched_neighbourhoodGroup,
+     [sched_setLiftSingle_functionAnySwap_conjure_aux21, sched_setLiftSingle_functionAnySwap_conjure_aux22,
+      sched_setLiftSingle_functionAnySwap_conjure_aux23, sched_setLiftSingle_functionAnySwap_conjure_aux24])
+find sched_setLiftSingle_functionLessInjective_conjure_aux7: matrix indexed by [int(1..n_boats / 2)] of int(1..n_boats)
+find sched_setLiftSingle_functionLessInjective_conjure_aux8:
+        matrix indexed by [int(1..n_boats / 2 + toInt(n_boats % 2 != 0))] of int(1..n_boats)
+find sched_setLiftSingle_functionLessInjective_conjure_aux25: int(1..n_periods)
+find sched_setLiftSingle_functionLessInjective_conjure_aux26: int(1..n_periods)
+find sched_setLiftSingle_functionLessInjective_conjure_aux27: matrix indexed by [int(1..n_periods)] of int(0..1)
+find sched_setLiftSingle_functionLessInjective_conjure_aux28: matrix indexed by [int(1..n_periods)] of int(-1..1)
+find sched_setLiftSingle_functionLessInjective_activation: bool
+find sched_setLiftSingle_functionLessInjective_size: int(1..n_boats)
+SNSNeighbourhood sched_setLiftSingle_functionLessInjective :
+    (sched_setLiftSingle_functionLessInjective_size, sched_setLiftSingle_functionLessInjective_activation,
+     sched_neighbourhoodGroup,
+     [sched_setLiftSingle_functionLessInjective_conjure_aux7, sched_setLiftSingle_functionLessInjective_conjure_aux8,
+      sched_setLiftSingle_functionLessInjective_conjure_aux25, sched_setLiftSingle_functionLessInjective_conjure_aux26,
+      sched_setLiftSingle_functionLessInjective_conjure_aux27, sched_setLiftSingle_functionLessInjective_conjure_aux28])
+find sched_setLiftSingle_functionMoreInjective_conjure_aux9: matrix indexed by [int(1..n_boats / 2)] of int(1..n_boats)
+find sched_setLiftSingle_functionMoreInjective_conjure_aux10:
+        matrix indexed by [int(1..n_boats / 2 + toInt(n_boats % 2 != 0))] of int(1..n_boats)
+find sched_setLiftSingle_functionMoreInjective_conjure_aux29: int(1..n_periods)
+find sched_setLiftSingle_functionMoreInjective_conjure_aux30: int(1..n_periods)
+find sched_setLiftSingle_functionMoreInjective_conjure_aux31: matrix indexed by [int(1..n_periods)] of int(0..1)
+find sched_setLiftSingle_functionMoreInjective_conjure_aux32: matrix indexed by [int(1..n_periods)] of int(-1..1)
+find sched_setLiftSingle_functionMoreInjective_activation: bool
+find sched_setLiftSingle_functionMoreInjective_size: int(1..n_boats)
+SNSNeighbourhood sched_setLiftSingle_functionMoreInjective :
+    (sched_setLiftSingle_functionMoreInjective_size, sched_setLiftSingle_functionMoreInjective_activation,
+     sched_neighbourhoodGroup,
+     [sched_setLiftSingle_functionMoreInjective_conjure_aux9, sched_setLiftSingle_functionMoreInjective_conjure_aux10,
+      sched_setLiftSingle_functionMoreInjective_conjure_aux29, sched_setLiftSingle_functionMoreInjective_conjure_aux30,
+      sched_setLiftSingle_functionMoreInjective_conjure_aux31, sched_setLiftSingle_functionMoreInjective_conjure_aux32])
+SNSIncumbentMapping([hosts_Occurrence, sched_ExplicitR9_Function1D],
+                    [incumbent_hosts_Occurrence, incumbent_sched_ExplicitR9_Function1D])
+minimising optVar
+such that
+    and([and([hosts_Occurrence[sched_ExplicitR9_Function1D[q13, q16]] | q16 : int(1..n_boats)]) /\
+         and([hosts_Occurrence[q17] -> or([sched_ExplicitR9_Function1D[q13, q20] = q17 | q20 : int(1..n_boats)])
+                  | q17 : int(1..n_boats)])
+             | q13 : int(1..n_periods)]),
+    and([and([hosts_Occurrence[h] <-> sched_ExplicitR9_Function1D[q21, h] = h | h : int(1..n_boats)])
+             | q21 : int(1..n_periods)]),
+    and([and([hosts_Occurrence[h] ->
+              sum([toInt(sched_ExplicitR9_Function1D[q22, q24] = h) * catchUndef(crew_Function1D[q24], 0)
+                       | q24 : int(1..n_boats)])
+              <= capacity_Function1D[h]
+                  | h : int(1..n_boats)])
+             | q22 : int(1..n_periods)]),
+    and([b1 < b2 ->
+         sum([toInt(sched_ExplicitR9_Function1D[q25, b1] = sched_ExplicitR9_Function1D[q25, b2])
+                  | q25 : int(1..n_periods)])
+         <= 1
+             | b1 : int(1..n_boats), b2 : int(1..n_boats)]),
+    optVar = sum([toInt(hosts_Occurrence[q51]) | q51 : int(1..n_boats)]),
+    hosts_setAdd_activation -> and([incumbent_hosts_Occurrence[q52] -> hosts_Occurrence[q52] | q52 : int(1..n_boats)]),
+    hosts_setAdd_activation ->
+    sum([toInt(hosts_Occurrence[q53]) | q53 : int(1..n_boats)]) -
+    sum([toInt(incumbent_hosts_Occurrence[q54]) | q54 : int(1..n_boats)])
+    = hosts_setAdd_size,
+    !hosts_setAdd_activation -> and([hosts_setAdd_size = 1; int(1)]),
+    hosts_setDiff_activation ->
+    hosts_setDiff_size =
+    sum([toInt(incumbent_hosts_Occurrence[q55] /\ !hosts_Occurrence[q55]) | q55 : int(1..n_boats)]) +
+    sum([toInt(hosts_Occurrence[q56] /\ !incumbent_hosts_Occurrence[q56]) | q56 : int(1..n_boats)]),
+    !hosts_setDiff_activation -> and([hosts_setDiff_size = 1; int(1)]),
+    hosts_setRemove_activation ->
+    and([hosts_Occurrence[q57] -> incumbent_hosts_Occurrence[q57] | q57 : int(1..n_boats)]),
+    hosts_setRemove_activation ->
+    sum([toInt(incumbent_hosts_Occurrence[q58]) | q58 : int(1..n_boats)]) -
+    sum([toInt(hosts_Occurrence[q59]) | q59 : int(1..n_boats)])
+    = hosts_setRemove_size,
+    !hosts_setRemove_activation -> and([hosts_setRemove_size = 1; int(1)]),
+    hosts_setSwap_activation ->
+    sum([toInt(hosts_Occurrence[q60] /\ !incumbent_hosts_Occurrence[q60]) | q60 : int(1..n_boats)]) =
+    hosts_setSwap_size,
+    hosts_setSwap_activation ->
+    sum([toInt(incumbent_hosts_Occurrence[q61]) | q61 : int(1..n_boats)]) =
+    sum([toInt(hosts_Occurrence[q62]) | q62 : int(1..n_boats)]),
+    !hosts_setSwap_activation -> and([hosts_setSwap_size = 1; int(1)]),
+    hosts_setSwapAdd_activation ->
+    sum([toInt(hosts_Occurrence[q63] /\ !incumbent_hosts_Occurrence[q63]) | q63 : int(1..n_boats)]) =
+    hosts_setSwapAdd_size,
+    hosts_setSwapAdd_activation ->
+    sum([toInt(hosts_Occurrence[q64]) | q64 : int(1..n_boats)]) >=
+    sum([toInt(incumbent_hosts_Occurrence[q65]) | q65 : int(1..n_boats)]),
+    !hosts_setSwapAdd_activation -> and([hosts_setSwapAdd_size = 1; int(1)]),
+    hosts_setSwapRemove_activation ->
+    sum([toInt(incumbent_hosts_Occurrence[q66] /\ !hosts_Occurrence[q66]) | q66 : int(1..n_boats)]) =
+    hosts_setSwapRemove_size,
+    hosts_setSwapRemove_activation ->
+    sum([toInt(hosts_Occurrence[q67]) | q67 : int(1..n_boats)]) <=
+    sum([toInt(incumbent_hosts_Occurrence[q68]) | q68 : int(1..n_boats)]),
+    !hosts_setSwapRemove_activation -> and([hosts_setSwapRemove_size = 1; int(1)]),
+    sched_setLiftMultiple_functionCrossOver_activation ->
+    allDiff([sched_setLiftMultiple_functionCrossOver_conjure_aux15,
+             sched_setLiftMultiple_functionCrossOver_conjure_aux16;
+                 int(1..2)]),
+    sched_setLiftMultiple_functionCrossOver_activation ->
+    allDiff([sched_setLiftMultiple_functionCrossOver_conjure_aux17,
+             sched_setLiftMultiple_functionCrossOver_conjure_aux18;
+                 int(1..2)]),
+    sched_setLiftMultiple_functionCrossOver_activation ->
+    sched_setLiftMultiple_functionCrossOver_conjure_aux19[n_periods] =
+    toInt(n_periods = sched_setLiftMultiple_functionCrossOver_conjure_aux15 \/
+          n_periods = sched_setLiftMultiple_functionCrossOver_conjure_aux16)
+    /\
+    and([(sched_setLiftMultiple_functionCrossOver_conjure_aux19[n_periods - q26] = 0 <->
+          !(n_periods - q26 = sched_setLiftMultiple_functionCrossOver_conjure_aux15 \/
+            n_periods - q26 = sched_setLiftMultiple_functionCrossOver_conjure_aux16))
+         /\
+         (n_periods - q26 = sched_setLiftMultiple_functionCrossOver_conjure_aux15 \/
+          n_periods - q26 = sched_setLiftMultiple_functionCrossOver_conjure_aux16
+          ->
+          sched_setLiftMultiple_functionCrossOver_conjure_aux19[n_periods - q26] =
+          sched_setLiftMultiple_functionCrossOver_conjure_aux19[n_periods - (q26 - 1)] + 1)
+             | q26 : int(1..n_periods - 1)]),
+    sched_setLiftMultiple_functionCrossOver_activation ->
+    sched_setLiftMultiple_functionCrossOver_conjure_aux20[1] =
+    0 -
+    toInt(1 = sched_setLiftMultiple_functionCrossOver_conjure_aux17 \/
+          1 = sched_setLiftMultiple_functionCrossOver_conjure_aux18)
+    +
+    catchUndef(sched_setLiftMultiple_functionCrossOver_conjure_aux19
+                   [1 -
+                    toInt(1 = sched_setLiftMultiple_functionCrossOver_conjure_aux17 \/
+                          1 = sched_setLiftMultiple_functionCrossOver_conjure_aux18)],
+               0)
+    /\
+    and([sched_setLiftMultiple_functionCrossOver_conjure_aux20[q26] =
+         sched_setLiftMultiple_functionCrossOver_conjure_aux20[q26 - 1] -
+         toInt(q26 = sched_setLiftMultiple_functionCrossOver_conjure_aux17 \/
+               q26 = sched_setLiftMultiple_functionCrossOver_conjure_aux18)
+         +
+         catchUndef(sched_setLiftMultiple_functionCrossOver_conjure_aux19
+                        [sched_setLiftMultiple_functionCrossOver_conjure_aux20[q26 - 1] -
+                         toInt(q26 = sched_setLiftMultiple_functionCrossOver_conjure_aux17 \/
+                               q26 = sched_setLiftMultiple_functionCrossOver_conjure_aux18)
+                         + q26],
+                    0)
+             | q26 : int(2..n_periods)]),
+    sched_setLiftMultiple_functionCrossOver_activation ->
+    and([!(q26 = sched_setLiftMultiple_functionCrossOver_conjure_aux17 \/
+           q26 = sched_setLiftMultiple_functionCrossOver_conjure_aux18)
+         ->
+         and([incumbent_sched_ExplicitR9_Function1D
+                  [q26 + sched_setLiftMultiple_functionCrossOver_conjure_aux20[q26], q28]
+              = sched_ExplicitR9_Function1D[q26, q28]
+                  | q28 : int(1..n_boats)])
+         /\
+         and([sched_ExplicitR9_Function1D[q26, q29] =
+              incumbent_sched_ExplicitR9_Function1D
+                  [q26 + sched_setLiftMultiple_functionCrossOver_conjure_aux20[q26], q29]
+                  | q29 : int(1..n_boats)])
+             | q26 : int(1..n_periods)]),
+    sched_setLiftMultiple_functionCrossOver_activation ->
+    sched_setLiftMultiple_functionCrossOver_size =
+    sum([toInt(sched_ExplicitR9_Function1D[sched_setLiftMultiple_functionCrossOver_conjure_aux17, q30] =
+               incumbent_sched_ExplicitR9_Function1D[sched_setLiftMultiple_functionCrossOver_conjure_aux16, q30]
+               /\
+               sched_ExplicitR9_Function1D[sched_setLiftMultiple_functionCrossOver_conjure_aux18, q30] =
+               incumbent_sched_ExplicitR9_Function1D[sched_setLiftMultiple_functionCrossOver_conjure_aux15, q30]
+               /\
+               incumbent_sched_ExplicitR9_Function1D[sched_setLiftMultiple_functionCrossOver_conjure_aux15, q30] !=
+               incumbent_sched_ExplicitR9_Function1D[sched_setLiftMultiple_functionCrossOver_conjure_aux16, q30])
+             | q30 : int(1..n_boats), or([q32 = q30 | q32 : int(1..n_boats)])]),
+    sched_setLiftMultiple_functionCrossOver_activation -> true,
+    !sched_setLiftMultiple_functionCrossOver_activation ->
+    and([sched_setLiftMultiple_functionCrossOver_size = 1, sched_setLiftMultiple_functionCrossOver_conjure_aux15 = 1,
+         sched_setLiftMultiple_functionCrossOver_conjure_aux16 = 1,
+         sched_setLiftMultiple_functionCrossOver_conjure_aux17 = 1,
+         sched_setLiftMultiple_functionCrossOver_conjure_aux18 = 1,
+         and([sched_setLiftMultiple_functionCrossOver_conjure_aux19[q69] = 0 | q69 : int(1..n_periods)]),
+         and([sched_setLiftMultiple_functionCrossOver_conjure_aux20[q70] = -2 | q70 : int(1..n_periods)]);
+             int(1..7)]),
+    sched_setLiftSingle_functionAnySwap_activation ->
+    allDiff([sched_setLiftSingle_functionAnySwap_conjure_aux21; int(1)]),
+    sched_setLiftSingle_functionAnySwap_activation ->
+    allDiff([sched_setLiftSingle_functionAnySwap_conjure_aux22; int(1)]),
+    sched_setLiftSingle_functionAnySwap_activation ->
+    sched_setLiftSingle_functionAnySwap_conjure_aux23[n_periods] =
+    toInt(n_periods = sched_setLiftSingle_functionAnySwap_conjure_aux21)
+    /\
+    and([(sched_setLiftSingle_functionAnySwap_conjure_aux23[n_periods - q33] = 0 <->
+          !(n_periods - q33 = sched_setLiftSingle_functionAnySwap_conjure_aux21))
+         /\
+         (n_periods - q33 = sched_setLiftSingle_functionAnySwap_conjure_aux21 ->
+          sched_setLiftSingle_functionAnySwap_conjure_aux23[n_periods - q33] =
+          sched_setLiftSingle_functionAnySwap_conjure_aux23[n_periods - (q33 - 1)] + 1)
+             | q33 : int(1..n_periods - 1)]),
+    sched_setLiftSingle_functionAnySwap_activation ->
+    sched_setLiftSingle_functionAnySwap_conjure_aux24[1] =
+    0 - toInt(1 = sched_setLiftSingle_functionAnySwap_conjure_aux22) +
+    catchUndef(sched_setLiftSingle_functionAnySwap_conjure_aux23
+                   [1 - toInt(1 = sched_setLiftSingle_functionAnySwap_conjure_aux22)],
+               0)
+    /\
+    and([sched_setLiftSingle_functionAnySwap_conjure_aux24[q33] =
+         sched_setLiftSingle_functionAnySwap_conjure_aux24[q33 - 1] -
+         toInt(q33 = sched_setLiftSingle_functionAnySwap_conjure_aux22)
+         +
+         catchUndef(sched_setLiftSingle_functionAnySwap_conjure_aux23
+                        [sched_setLiftSingle_functionAnySwap_conjure_aux24[q33 - 1] -
+                         toInt(q33 = sched_setLiftSingle_functionAnySwap_conjure_aux22)
+                         + q33],
+                    0)
+             | q33 : int(2..n_periods)]),
+    sched_setLiftSingle_functionAnySwap_activation ->
+    and([!(q33 = sched_setLiftSingle_functionAnySwap_conjure_aux22) ->
+         and([incumbent_sched_ExplicitR9_Function1D[q33 + sched_setLiftSingle_functionAnySwap_conjure_aux24[q33], q35] =
+              sched_ExplicitR9_Function1D[q33, q35]
+                  | q35 : int(1..n_boats)])
+         /\
+         and([sched_ExplicitR9_Function1D[q33, q36] =
+              incumbent_sched_ExplicitR9_Function1D[q33 + sched_setLiftSingle_functionAnySwap_conjure_aux24[q33], q36]
+                  | q36 : int(1..n_boats)])
+             | q33 : int(1..n_periods)]),
+    sched_setLiftSingle_functionAnySwap_activation ->
+    sched_setLiftSingle_functionAnySwap_size * 2 =
+    sum([toInt(sched_ExplicitR9_Function1D[sched_setLiftSingle_functionAnySwap_conjure_aux22, q37] !=
+               incumbent_sched_ExplicitR9_Function1D[sched_setLiftSingle_functionAnySwap_conjure_aux21, q37])
+             | q37 : int(1..n_boats)]),
+    sched_setLiftSingle_functionAnySwap_activation -> true,
+    !sched_setLiftSingle_functionAnySwap_activation ->
+    and([sched_setLiftSingle_functionAnySwap_size = 1, sched_setLiftSingle_functionAnySwap_conjure_aux21 = 1,
+         sched_setLiftSingle_functionAnySwap_conjure_aux22 = 1,
+         and([sched_setLiftSingle_functionAnySwap_conjure_aux23[q71] = 0 | q71 : int(1..n_periods)]),
+         and([sched_setLiftSingle_functionAnySwap_conjure_aux24[q72] = -1 | q72 : int(1..n_periods)]);
+             int(1..5)]),
+    sched_setLiftSingle_functionLessInjective_activation ->
+    allDiff([sched_setLiftSingle_functionLessInjective_conjure_aux25; int(1)]),
+    sched_setLiftSingle_functionLessInjective_activation ->
+    allDiff([sched_setLiftSingle_functionLessInjective_conjure_aux26; int(1)]),
+    sched_setLiftSingle_functionLessInjective_activation ->
+    sched_setLiftSingle_functionLessInjective_conjure_aux27[n_periods] =
+    toInt(n_periods = sched_setLiftSingle_functionLessInjective_conjure_aux25)
+    /\
+    and([(sched_setLiftSingle_functionLessInjective_conjure_aux27[n_periods - q38] = 0 <->
+          !(n_periods - q38 = sched_setLiftSingle_functionLessInjective_conjure_aux25))
+         /\
+         (n_periods - q38 = sched_setLiftSingle_functionLessInjective_conjure_aux25 ->
+          sched_setLiftSingle_functionLessInjective_conjure_aux27[n_periods - q38] =
+          sched_setLiftSingle_functionLessInjective_conjure_aux27[n_periods - (q38 - 1)] + 1)
+             | q38 : int(1..n_periods - 1)]),
+    sched_setLiftSingle_functionLessInjective_activation ->
+    sched_setLiftSingle_functionLessInjective_conjure_aux28[1] =
+    0 - toInt(1 = sched_setLiftSingle_functionLessInjective_conjure_aux26) +
+    catchUndef(sched_setLiftSingle_functionLessInjective_conjure_aux27
+                   [1 - toInt(1 = sched_setLiftSingle_functionLessInjective_conjure_aux26)],
+               0)
+    /\
+    and([sched_setLiftSingle_functionLessInjective_conjure_aux28[q38] =
+         sched_setLiftSingle_functionLessInjective_conjure_aux28[q38 - 1] -
+         toInt(q38 = sched_setLiftSingle_functionLessInjective_conjure_aux26)
+         +
+         catchUndef(sched_setLiftSingle_functionLessInjective_conjure_aux27
+                        [sched_setLiftSingle_functionLessInjective_conjure_aux28[q38 - 1] -
+                         toInt(q38 = sched_setLiftSingle_functionLessInjective_conjure_aux26)
+                         + q38],
+                    0)
+             | q38 : int(2..n_periods)]),
+    sched_setLiftSingle_functionLessInjective_activation ->
+    and([!(q38 = sched_setLiftSingle_functionLessInjective_conjure_aux26) ->
+         and([incumbent_sched_ExplicitR9_Function1D
+                  [q38 + sched_setLiftSingle_functionLessInjective_conjure_aux28[q38], q40]
+              = sched_ExplicitR9_Function1D[q38, q40]
+                  | q40 : int(1..n_boats)])
+         /\
+         and([sched_ExplicitR9_Function1D[q38, q41] =
+              incumbent_sched_ExplicitR9_Function1D
+                  [q38 + sched_setLiftSingle_functionLessInjective_conjure_aux28[q38], q41]
+                  | q41 : int(1..n_boats)])
+             | q38 : int(1..n_periods)]),
+    sched_setLiftSingle_functionLessInjective_activation ->
+    and([allDiff(flatten([sched_setLiftSingle_functionLessInjective_conjure_aux7,
+                          sched_setLiftSingle_functionLessInjective_conjure_aux8;
+                              int(1..2)])),
+         and([(q2 <= sched_setLiftSingle_functionLessInjective_size ->
+               incumbent_sched_ExplicitR9_Function1D
+                   [sched_setLiftSingle_functionLessInjective_conjure_aux25,
+                    sched_setLiftSingle_functionLessInjective_conjure_aux7[q2]]
+               !=
+               incumbent_sched_ExplicitR9_Function1D
+                   [sched_setLiftSingle_functionLessInjective_conjure_aux25,
+                    sched_setLiftSingle_functionLessInjective_conjure_aux8[q2]]
+               /\
+               sched_ExplicitR9_Function1D
+                   [sched_setLiftSingle_functionLessInjective_conjure_aux26,
+                    sched_setLiftSingle_functionLessInjective_conjure_aux7[q2]]
+               =
+               sched_ExplicitR9_Function1D
+                   [sched_setLiftSingle_functionLessInjective_conjure_aux26,
+                    sched_setLiftSingle_functionLessInjective_conjure_aux8[q2]])
+              /\
+              (q2 > sched_setLiftSingle_functionLessInjective_size ->
+               incumbent_sched_ExplicitR9_Function1D
+                   [sched_setLiftSingle_functionLessInjective_conjure_aux25,
+                    sched_setLiftSingle_functionLessInjective_conjure_aux7[q2]]
+               =
+               sched_ExplicitR9_Function1D
+                   [sched_setLiftSingle_functionLessInjective_conjure_aux26,
+                    sched_setLiftSingle_functionLessInjective_conjure_aux7[q2]]
+               /\
+               incumbent_sched_ExplicitR9_Function1D
+                   [sched_setLiftSingle_functionLessInjective_conjure_aux25,
+                    sched_setLiftSingle_functionLessInjective_conjure_aux8[q2]]
+               =
+               sched_ExplicitR9_Function1D
+                   [sched_setLiftSingle_functionLessInjective_conjure_aux26,
+                    sched_setLiftSingle_functionLessInjective_conjure_aux8[q2]])
+                  | q2 : int(1..n_boats / 2)]),
+         n_boats % 2 != 0 ->
+         sched_ExplicitR9_Function1D
+             [sched_setLiftSingle_functionLessInjective_conjure_aux26,
+              sched_setLiftSingle_functionLessInjective_conjure_aux8[n_boats / 2 + 1]]
+         =
+         incumbent_sched_ExplicitR9_Function1D
+             [sched_setLiftSingle_functionLessInjective_conjure_aux25,
+              sched_setLiftSingle_functionLessInjective_conjure_aux8[n_boats / 2 + 1]];
+             int(1..3)]),
+    sched_setLiftSingle_functionLessInjective_activation -> true,
+    !sched_setLiftSingle_functionLessInjective_activation ->
+    and([sched_setLiftSingle_functionLessInjective_size = 1,
+         and([sched_setLiftSingle_functionLessInjective_conjure_aux7[q73] = 1 | q73 : int(1..n_boats / 2)]),
+         and([sched_setLiftSingle_functionLessInjective_conjure_aux8[q74] = 1
+                  | q74 : int(1..n_boats / 2 + toInt(n_boats % 2 != 0))]),
+         sched_setLiftSingle_functionLessInjective_conjure_aux25 = 1,
+         sched_setLiftSingle_functionLessInjective_conjure_aux26 = 1,
+         and([sched_setLiftSingle_functionLessInjective_conjure_aux27[q75] = 0 | q75 : int(1..n_periods)]),
+         and([sched_setLiftSingle_functionLessInjective_conjure_aux28[q76] = -1 | q76 : int(1..n_periods)]);
+             int(1..7)]),
+    sched_setLiftSingle_functionMoreInjective_activation ->
+    allDiff([sched_setLiftSingle_functionMoreInjective_conjure_aux29; int(1)]),
+    sched_setLiftSingle_functionMoreInjective_activation ->
+    allDiff([sched_setLiftSingle_functionMoreInjective_conjure_aux30; int(1)]),
+    sched_setLiftSingle_functionMoreInjective_activation ->
+    sched_setLiftSingle_functionMoreInjective_conjure_aux31[n_periods] =
+    toInt(n_periods = sched_setLiftSingle_functionMoreInjective_conjure_aux29)
+    /\
+    and([(sched_setLiftSingle_functionMoreInjective_conjure_aux31[n_periods - q42] = 0 <->
+          !(n_periods - q42 = sched_setLiftSingle_functionMoreInjective_conjure_aux29))
+         /\
+         (n_periods - q42 = sched_setLiftSingle_functionMoreInjective_conjure_aux29 ->
+          sched_setLiftSingle_functionMoreInjective_conjure_aux31[n_periods - q42] =
+          sched_setLiftSingle_functionMoreInjective_conjure_aux31[n_periods - (q42 - 1)] + 1)
+             | q42 : int(1..n_periods - 1)]),
+    sched_setLiftSingle_functionMoreInjective_activation ->
+    sched_setLiftSingle_functionMoreInjective_conjure_aux32[1] =
+    0 - toInt(1 = sched_setLiftSingle_functionMoreInjective_conjure_aux30) +
+    catchUndef(sched_setLiftSingle_functionMoreInjective_conjure_aux31
+                   [1 - toInt(1 = sched_setLiftSingle_functionMoreInjective_conjure_aux30)],
+               0)
+    /\
+    and([sched_setLiftSingle_functionMoreInjective_conjure_aux32[q42] =
+         sched_setLiftSingle_functionMoreInjective_conjure_aux32[q42 - 1] -
+         toInt(q42 = sched_setLiftSingle_functionMoreInjective_conjure_aux30)
+         +
+         catchUndef(sched_setLiftSingle_functionMoreInjective_conjure_aux31
+                        [sched_setLiftSingle_functionMoreInjective_conjure_aux32[q42 - 1] -
+                         toInt(q42 = sched_setLiftSingle_functionMoreInjective_conjure_aux30)
+                         + q42],
+                    0)
+             | q42 : int(2..n_periods)]),
+    sched_setLiftSingle_functionMoreInjective_activation ->
+    and([!(q42 = sched_setLiftSingle_functionMoreInjective_conjure_aux30) ->
+         and([incumbent_sched_ExplicitR9_Function1D
+                  [q42 + sched_setLiftSingle_functionMoreInjective_conjure_aux32[q42], q44]
+              = sched_ExplicitR9_Function1D[q42, q44]
+                  | q44 : int(1..n_boats)])
+         /\
+         and([sched_ExplicitR9_Function1D[q42, q45] =
+              incumbent_sched_ExplicitR9_Function1D
+                  [q42 + sched_setLiftSingle_functionMoreInjective_conjure_aux32[q42], q45]
+                  | q45 : int(1..n_boats)])
+             | q42 : int(1..n_periods)]),
+    sched_setLiftSingle_functionMoreInjective_activation ->
+    and([allDiff(flatten([sched_setLiftSingle_functionMoreInjective_conjure_aux9,
+                          sched_setLiftSingle_functionMoreInjective_conjure_aux10;
+                              int(1..2)])),
+         and([(q3 <= sched_setLiftSingle_functionMoreInjective_size ->
+               incumbent_sched_ExplicitR9_Function1D
+                   [sched_setLiftSingle_functionMoreInjective_conjure_aux29,
+                    sched_setLiftSingle_functionMoreInjective_conjure_aux9[q3]]
+               =
+               incumbent_sched_ExplicitR9_Function1D
+                   [sched_setLiftSingle_functionMoreInjective_conjure_aux29,
+                    sched_setLiftSingle_functionMoreInjective_conjure_aux10[q3]]
+               /\
+               sched_ExplicitR9_Function1D
+                   [sched_setLiftSingle_functionMoreInjective_conjure_aux30,
+                    sched_setLiftSingle_functionMoreInjective_conjure_aux9[q3]]
+               !=
+               sched_ExplicitR9_Function1D
+                   [sched_setLiftSingle_functionMoreInjective_conjure_aux30,
+                    sched_setLiftSingle_functionMoreInjective_conjure_aux10[q3]])
+              /\
+              (q3 > sched_setLiftSingle_functionMoreInjective_size ->
+               incumbent_sched_ExplicitR9_Function1D
+                   [sched_setLiftSingle_functionMoreInjective_conjure_aux29,
+                    sched_setLiftSingle_functionMoreInjective_conjure_aux9[q3]]
+               =
+               sched_ExplicitR9_Function1D
+                   [sched_setLiftSingle_functionMoreInjective_conjure_aux30,
+                    sched_setLiftSingle_functionMoreInjective_conjure_aux9[q3]]
+               /\
+               incumbent_sched_ExplicitR9_Function1D
+                   [sched_setLiftSingle_functionMoreInjective_conjure_aux29,
+                    sched_setLiftSingle_functionMoreInjective_conjure_aux10[q3]]
+               =
+               sched_ExplicitR9_Function1D
+                   [sched_setLiftSingle_functionMoreInjective_conjure_aux30,
+                    sched_setLiftSingle_functionMoreInjective_conjure_aux10[q3]])
+                  | q3 : int(1..n_boats / 2)]),
+         n_boats % 2 != 0 ->
+         sched_ExplicitR9_Function1D
+             [sched_setLiftSingle_functionMoreInjective_conjure_aux30,
+              sched_setLiftSingle_functionMoreInjective_conjure_aux10[n_boats / 2 + 1]]
+         =
+         incumbent_sched_ExplicitR9_Function1D
+             [sched_setLiftSingle_functionMoreInjective_conjure_aux29,
+              sched_setLiftSingle_functionMoreInjective_conjure_aux10[n_boats / 2 + 1]];
+             int(1..3)]),
+    sched_setLiftSingle_functionMoreInjective_activation -> true,
+    !sched_setLiftSingle_functionMoreInjective_activation ->
+    and([sched_setLiftSingle_functionMoreInjective_size = 1,
+         and([sched_setLiftSingle_functionMoreInjective_conjure_aux9[q77] = 1 | q77 : int(1..n_boats / 2)]),
+         and([sched_setLiftSingle_functionMoreInjective_conjure_aux10[q78] = 1
+                  | q78 : int(1..n_boats / 2 + toInt(n_boats % 2 != 0))]),
+         sched_setLiftSingle_functionMoreInjective_conjure_aux29 = 1,
+         sched_setLiftSingle_functionMoreInjective_conjure_aux30 = 1,
+         and([sched_setLiftSingle_functionMoreInjective_conjure_aux31[q79] = 0 | q79 : int(1..n_periods)]),
+         and([sched_setLiftSingle_functionMoreInjective_conjure_aux32[q80] = -1 | q80 : int(1..n_periods)]);
+             int(1..7)]),
+    and([or([!(sched_ExplicitR9_Function1D[q47, q49] = sched_ExplicitR9_Function1D[q46, q49]) | q49 : int(1..n_boats)])
+         \/
+         or([!(sched_ExplicitR9_Function1D[q46, q50] = sched_ExplicitR9_Function1D[q47, q50]) | q50 : int(1..n_boats)])
+             | q46 : int(1..n_periods), q47 : int(1..n_periods), q46 < q47])
+
+$ Conjure's
+$ {"finds": [{"Name": "hosts"}, {"Name": "sched"}, {"Name": "optVar"}],
+$  "givens": [{"Name": "n_boats"}, {"Name": "n_periods"}, {"Name": "capacity"}, {"Name": "crew"}],
+$  "enumGivens": [],
+$  "enumLettings": [],
+$  "lettings": [[{"Name": "Boat"},
+$                {"Domain": {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                            {"Reference": [{"Name": "n_boats"},
+$                                                                           {"DeclNoRepr": ["Given", {"Name": "n_boats"},
+$                                                                                           {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]},
+$                                                                                           {"NoRegion": []}]}]}]}]}}]],
+$  "unnameds": [],
+$  "strategyQ": {"PickFirst": []},
+$  "strategyA": {"Compact": []},
+$  "trailCompact": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 4], [1, 1, 1], [1, 1, 1], [1, 1, 4], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 4], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 4], [1, 1, 4], [1, 1, 1], [1, 1, 1], [1, 1, 4], [1, 1, 1], [1, 1, 4], [1, 1, 4],
+$                   [1, 1, 4], [1, 1, 4], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 4], [1, 1, 4], [1, 1, 4], [1, 1, 4],
+$                   [1, 1, 1], [1, 1, 4], [1, 1, 4], [1, 1, 4], [1, 1, 4], [1, 1, 1], [1, 1, 1], [1, 1, 4], [1, 1, 4],
+$                   [1, 1, 1], [1, 1, 4], [1, 1, 4], [1, 1, 1], [1, 1, 4], [1, 1, 4], [1, 1, 1], [1, 1, 4], [1, 1, 4],
+$                   [1, 1, 1], [1, 1, 4], [1, 1, 4], [1, 1, 1], [1, 1, 4], [1, 1, 4], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1]],
+$  "trailVerbose": [],
+$  "trailRewrites": [],
+$  "nameGenState": [["conjure_aux", 33], ["fin", 5], ["q", 69]],
+$  "nbExtraGivens": 4,
+$  "representations": [[{"MachineName": ["fin", 1, []]}, {"DomainInt": []}],
+$                      [{"Name": "n_boats"}, {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}],
+$                      [{"MachineName": ["fin", 2, []]}, {"DomainInt": []}],
+$                      [{"MachineName": ["fin", 3, []]}, {"DomainInt": []}],
+$                      [{"MachineName": ["fin", 4, []]}, {"DomainInt": []}],
+$                      [{"Name": "n_periods"}, {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}],
+$                      [{"Name": "optVar"},
+$                       {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 0}},
+$                                                        {"Reference": [{"Name": "n_boats"},
+$                                                                       {"DeclHasRepr": ["Given", {"Name": "n_boats"},
+$                                                                                        {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]}]}]}],
+$                      [{"Name": "hosts"},
+$                       {"DomainSet": [{"Set_Occurrence": []}, {"SizeAttr_None": []},
+$                                      {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                       {"Reference": [{"Name": "n_boats"},
+$                                                                                      {"DeclHasRepr": ["Given",
+$                                                                                                       {"Name": "n_boats"},
+$                                                                                                       {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]}]}]}]}],
+$                      [{"Name": "sched"},
+$                       {"DomainSet": [{"Set_Explicit": []},
+$                                      {"SizeAttr_Size": {"Reference": [{"Name": "n_periods"},
+$                                                                       {"DeclHasRepr": ["Given", {"Name": "n_periods"},
+$                                                                                        {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]}},
+$                                      {"DomainFunction": [{"Function_1D": []},
+$                                                          [{"SizeAttr_None": []}, "PartialityAttr_Total",
+$                                                           "JectivityAttr_None"],
+$                                                          {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                                           {"Reference": [{"Name": "n_boats"},
+$                                                                                                          {"DeclHasRepr": ["Given",
+$                                                                                                                           {"Name": "n_boats"},
+$                                                                                                                           {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]}]}]},
+$                                                          {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                                           {"Reference": [{"Name": "n_boats"},
+$                                                                                                          {"DeclHasRepr": ["Given",
+$                                                                                                                           {"Name": "n_boats"},
+$                                                                                                                           {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]}]}]}]}]}],
+$                      [{"Name": "crew"},
+$                       {"DomainFunction": [{"Function_1D": []},
+$                                           [{"SizeAttr_Size": {"Reference": [{"MachineName": ["fin", 3, []]},
+$                                                                             {"DeclHasRepr": ["Given",
+$                                                                                              {"MachineName": ["fin", 3,
+$                                                                                                               []]},
+$                                                                                              {"DomainInt": []}]}]}},
+$                                            "PartialityAttr_Total", "JectivityAttr_None"],
+$                                           {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                            {"Reference": [{"Name": "n_boats"},
+$                                                                                           {"DeclHasRepr": ["Given",
+$                                                                                                            {"Name": "n_boats"},
+$                                                                                                            {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]}]}]},
+$                                           {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                            {"Reference": [{"MachineName": ["fin", 4,
+$                                                                                                            []]},
+$                                                                                           {"DeclHasRepr": ["Given",
+$                                                                                                            {"MachineName": ["fin",
+$                                                                                                                             4,
+$                                                                                                                             []]},
+$                                                                                                            {"DomainInt": []}]}]}]}]}]}],
+$                      [{"Name": "capacity"},
+$                       {"DomainFunction": [{"Function_1D": []},
+$                                           [{"SizeAttr_Size": {"Reference": [{"MachineName": ["fin", 1, []]},
+$                                                                             {"DeclHasRepr": ["Given",
+$                                                                                              {"MachineName": ["fin", 1,
+$                                                                                                               []]},
+$                                                                                              {"DomainInt": []}]}]}},
+$                                            "PartialityAttr_Total", "JectivityAttr_None"],
+$                                           {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                            {"Reference": [{"Name": "n_boats"},
+$                                                                                           {"DeclHasRepr": ["Given",
+$                                                                                                            {"Name": "n_boats"},
+$                                                                                                            {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]}]}]},
+$                                           {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                            {"Reference": [{"MachineName": ["fin", 2,
+$                                                                                                            []]},
+$                                                                                           {"DeclHasRepr": ["Given",
+$                                                                                                            {"MachineName": ["fin",
+$                                                                                                                             2,
+$                                                                                                                             []]},
+$                                                                                                            {"DomainInt": []}]}]}]}]}]}],
+$                      [{"Name": "size"},
+$                       {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                        {"Reference": [{"Name": "n_boats"},
+$                                                                       {"DeclHasRepr": ["Given", {"Name": "n_boats"},
+$                                                                                        {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]}]}]}],
+$                      [{"MachineName": ["conjure_aux", 7, []]},
+$                       {"DomainMatrix": [{"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                          {"Op": {"MkOpDiv": [{"Reference": [{"Name": "n_boats"},
+$                                                                                                             {"DeclHasRepr": ["Given",
+$                                                                                                                              {"Name": "n_boats"},
+$                                                                                                                              {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]},
+$                                                                                              {"Constant": {"ConstantInt": 2}}]}}]}]},
+$                                         {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                          {"Reference": [{"Name": "n_boats"},
+$                                                                                         {"DeclHasRepr": ["Given",
+$                                                                                                          {"Name": "n_boats"},
+$                                                                                                          {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]}]}]}]}],
+$                      [{"MachineName": ["conjure_aux", 8, []]},
+$                       {"DomainMatrix": [{"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                          {"Op": {"MkOpSum": {"AbstractLiteral": {"AbsLitMatrix": [{"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                                                                                                                    {"Constant": {"ConstantInt": 2}}]}]},
+$                                                                                                                                   [{"Op": {"MkOpDiv": [{"Reference": [{"Name": "n_boats"},
+$                                                                                                                                                                       {"DeclHasRepr": ["Given",
+$                                                                                                                                                                                        {"Name": "n_boats"},
+$                                                                                                                                                                                        {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]},
+$                                                                                                                                                        {"Constant": {"ConstantInt": 2}}]}},
+$                                                                                                                                    {"Op": {"MkOpToInt": {"Op": {"MkOpNeq": [{"Op": {"MkOpMod": [{"Reference": [{"Name": "n_boats"},
+$                                                                                                                                                                                                                {"DeclHasRepr": ["Given",
+$                                                                                                                                                                                                                                 {"Name": "n_boats"},
+$                                                                                                                                                                                                                                 {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]},
+$                                                                                                                                                                                                 {"Constant": {"ConstantInt": 2}}]}},
+$                                                                                                                                                                             {"Constant": {"ConstantInt": 0}}]}}}}]]}}}}]}]},
+$                                         {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                          {"Reference": [{"Name": "n_boats"},
+$                                                                                         {"DeclHasRepr": ["Given",
+$                                                                                                          {"Name": "n_boats"},
+$                                                                                                          {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]}]}]}]}],
+$                      [{"MachineName": ["conjure_aux", 9, []]},
+$                       {"DomainMatrix": [{"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                          {"Op": {"MkOpDiv": [{"Reference": [{"Name": "n_boats"},
+$                                                                                                             {"DeclHasRepr": ["Given",
+$                                                                                                                              {"Name": "n_boats"},
+$                                                                                                                              {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]},
+$                                                                                              {"Constant": {"ConstantInt": 2}}]}}]}]},
+$                                         {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                          {"Reference": [{"Name": "n_boats"},
+$                                                                                         {"DeclHasRepr": ["Given",
+$                                                                                                          {"Name": "n_boats"},
+$                                                                                                          {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]}]}]}]}],
+$                      [{"MachineName": ["conjure_aux", 10, []]},
+$                       {"DomainMatrix": [{"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                          {"Op": {"MkOpSum": {"AbstractLiteral": {"AbsLitMatrix": [{"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                                                                                                                    {"Constant": {"ConstantInt": 2}}]}]},
+$                                                                                                                                   [{"Op": {"MkOpDiv": [{"Reference": [{"Name": "n_boats"},
+$                                                                                                                                                                       {"DeclHasRepr": ["Given",
+$                                                                                                                                                                                        {"Name": "n_boats"},
+$                                                                                                                                                                                        {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]},
+$                                                                                                                                                        {"Constant": {"ConstantInt": 2}}]}},
+$                                                                                                                                    {"Op": {"MkOpToInt": {"Op": {"MkOpNeq": [{"Op": {"MkOpMod": [{"Reference": [{"Name": "n_boats"},
+$                                                                                                                                                                                                                {"DeclHasRepr": ["Given",
+$                                                                                                                                                                                                                                 {"Name": "n_boats"},
+$                                                                                                                                                                                                                                 {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]},
+$                                                                                                                                                                                                 {"Constant": {"ConstantInt": 2}}]}},
+$                                                                                                                                                                             {"Constant": {"ConstantInt": 0}}]}}}}]]}}}}]}]},
+$                                         {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                          {"Reference": [{"Name": "n_boats"},
+$                                                                                         {"DeclHasRepr": ["Given",
+$                                                                                                          {"Name": "n_boats"},
+$                                                                                                          {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]}]}]}]}]],
+$  "representationsTree": [[{"Name": "capacity"},
+$                           [{"rootLabel": {"Function_1D": []},
+$                             "subForest": [{"rootLabel": null,
+$                                            "subForest": []},
+$                                           {"rootLabel": null,
+$                                            "subForest": []}]}]],
+$                          [{"MachineName": ["conjure_aux", 10, []]},
+$                           [{"rootLabel": null,
+$                             "subForest": [{"rootLabel": null,
+$                                            "subForest": []}]}]],
+$                          [{"MachineName": ["conjure_aux", 7, []]},
+$                           [{"rootLabel": null,
+$                             "subForest": [{"rootLabel": null,
+$                                            "subForest": []}]}]],
+$                          [{"MachineName": ["conjure_aux", 8, []]},
+$                           [{"rootLabel": null,
+$                             "subForest": [{"rootLabel": null,
+$                                            "subForest": []}]}]],
+$                          [{"MachineName": ["conjure_aux", 9, []]},
+$                           [{"rootLabel": null,
+$                             "subForest": [{"rootLabel": null,
+$                                            "subForest": []}]}]],
+$                          [{"Name": "crew"},
+$                           [{"rootLabel": {"Function_1D": []},
+$                             "subForest": [{"rootLabel": null,
+$                                            "subForest": []},
+$                                           {"rootLabel": null,
+$                                            "subForest": []}]}]],
+$                          [{"MachineName": ["fin", 1, []]},
+$                           [{"rootLabel": null,
+$                             "subForest": []}]],
+$                          [{"MachineName": ["fin", 2, []]},
+$                           [{"rootLabel": null,
+$                             "subForest": []}]],
+$                          [{"MachineName": ["fin", 3, []]},
+$                           [{"rootLabel": null,
+$                             "subForest": []}]],
+$                          [{"MachineName": ["fin", 4, []]},
+$                           [{"rootLabel": null,
+$                             "subForest": []}]],
+$                          [{"Name": "hosts"},
+$                           [{"rootLabel": {"Set_Occurrence": []},
+$                             "subForest": [{"rootLabel": null,
+$                                            "subForest": []}]}]],
+$                          [{"Name": "n_boats"},
+$                           [{"rootLabel": null,
+$                             "subForest": []}]],
+$                          [{"Name": "n_periods"},
+$                           [{"rootLabel": null,
+$                             "subForest": []}]],
+$                          [{"Name": "optVar"},
+$                           [{"rootLabel": null,
+$                             "subForest": []}]],
+$                          [{"Name": "sched"},
+$                           [{"rootLabel": {"Set_Explicit": []},
+$                             "subForest": [{"rootLabel": {"Function_1D": []},
+$                                            "subForest": [{"rootLabel": null,
+$                                                           "subForest": []},
+$                                                          {"rootLabel": null,
+$                                                           "subForest": []}]}]}]],
+$                          [{"Name": "size"},
+$                           [{"rootLabel": null,
+$                             "subForest": []}]]],
+$  "originalDomains": [[{"Name": "n_boats"}, {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}],
+$                      [{"Name": "n_periods"}, {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}],
+$                      [{"Name": "capacity"},
+$                       {"DomainFunction": [[], [{"SizeAttr_None": []}, "PartialityAttr_Total", "JectivityAttr_None"],
+$                                           {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                            {"Reference": [{"Name": "n_boats"},
+$                                                                                           null]}]}]},
+$                                           {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}],
+$                      [{"Name": "crew"},
+$                       {"DomainFunction": [[], [{"SizeAttr_None": []}, "PartialityAttr_Total", "JectivityAttr_None"],
+$                                           {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                            {"Reference": [{"Name": "n_boats"},
+$                                                                                           null]}]}]},
+$                                           {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}],
+$                      [{"Name": "hosts"},
+$                       {"DomainSet": [[], {"SizeAttr_None": []},
+$                                      {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                       {"Reference": [{"Name": "n_boats"}, null]}]}]}]}],
+$                      [{"Name": "sched"},
+$                       {"DomainSet": [[], {"SizeAttr_Size": {"Reference": [{"Name": "n_periods"}, null]}},
+$                                      {"DomainFunction": [[],
+$                                                          [{"SizeAttr_None": []}, "PartialityAttr_Total",
+$                                                           "JectivityAttr_None"],
+$                                                          {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                                           {"Reference": [{"Name": "n_boats"},
+$                                                                                                          null]}]}]},
+$                                                          {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                                           {"Reference": [{"Name": "n_boats"},
+$                                                                                                          null]}]}]}]}]}],
+$                      [{"Name": "optVar"},
+$                       {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 0}},
+$                                                        {"Reference": [{"Name": "n_boats"}, null]}]}]}]],
+$  "questionAnswered": []}

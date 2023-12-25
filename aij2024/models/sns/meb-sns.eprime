@@ -1,0 +1,532 @@
+language ESSENCE' 1.0
+
+given numberNodes: int(1..)
+given initialNode: int(1..numberNodes)
+given fin1: int
+given fin2: int
+given linkCosts_FunctionND: matrix indexed by [int(1..numberNodes), int(1..numberNodes)] of int(0..fin2)
+find parents_Function1D: matrix indexed by [int(1..numberNodes)] of int(1..numberNodes)
+find incumbent_parents_Function1D: matrix indexed by [int(1..numberNodes)] of int(1..numberNodes)
+find depths_Function1D: matrix indexed by [int(1..numberNodes)] of int(1..numberNodes)
+find incumbent_depths_Function1D: matrix indexed by [int(1..numberNodes)] of int(1..numberNodes)
+SNSGroup parents_neighbourhoodGroup : [parents_Function1D]
+find parents_functionAnySwap_activation: bool
+find parents_functionAnySwap_size: int(1..numberNodes)
+SNSNeighbourhood parents_functionAnySwap :
+    (parents_functionAnySwap_size, parents_functionAnySwap_activation, parents_neighbourhoodGroup, [])
+find parents_functionLessInjective_conjure_aux3: matrix indexed by [int(1..numberNodes / 2)] of int(1..numberNodes)
+find parents_functionLessInjective_conjure_aux4:
+        matrix indexed by [int(1..numberNodes / 2 + toInt(numberNodes % 2 != 0))] of int(1..numberNodes)
+find parents_functionLessInjective_activation: bool
+find parents_functionLessInjective_size: int(1..numberNodes)
+SNSNeighbourhood parents_functionLessInjective :
+    (parents_functionLessInjective_size, parents_functionLessInjective_activation, parents_neighbourhoodGroup,
+     [parents_functionLessInjective_conjure_aux3, parents_functionLessInjective_conjure_aux4])
+find parents_functionMoreInjective_conjure_aux5: matrix indexed by [int(1..numberNodes / 2)] of int(1..numberNodes)
+find parents_functionMoreInjective_conjure_aux6:
+        matrix indexed by [int(1..numberNodes / 2 + toInt(numberNodes % 2 != 0))] of int(1..numberNodes)
+find parents_functionMoreInjective_activation: bool
+find parents_functionMoreInjective_size: int(1..numberNodes)
+SNSNeighbourhood parents_functionMoreInjective :
+    (parents_functionMoreInjective_size, parents_functionMoreInjective_activation, parents_neighbourhoodGroup,
+     [parents_functionMoreInjective_conjure_aux5, parents_functionMoreInjective_conjure_aux6])
+SNSGroup depths_neighbourhoodGroup : [depths_Function1D]
+find depths_functionAnySwap_activation: bool
+find depths_functionAnySwap_size: int(1..numberNodes)
+SNSNeighbourhood depths_functionAnySwap :
+    (depths_functionAnySwap_size, depths_functionAnySwap_activation, depths_neighbourhoodGroup, [])
+find depths_functionLessInjective_conjure_aux9: matrix indexed by [int(1..numberNodes / 2)] of int(1..numberNodes)
+find depths_functionLessInjective_conjure_aux10:
+        matrix indexed by [int(1..numberNodes / 2 + toInt(numberNodes % 2 != 0))] of int(1..numberNodes)
+find depths_functionLessInjective_activation: bool
+find depths_functionLessInjective_size: int(1..numberNodes)
+SNSNeighbourhood depths_functionLessInjective :
+    (depths_functionLessInjective_size, depths_functionLessInjective_activation, depths_neighbourhoodGroup,
+     [depths_functionLessInjective_conjure_aux9, depths_functionLessInjective_conjure_aux10])
+find depths_functionMoreInjective_conjure_aux11: matrix indexed by [int(1..numberNodes / 2)] of int(1..numberNodes)
+find depths_functionMoreInjective_conjure_aux12:
+        matrix indexed by [int(1..numberNodes / 2 + toInt(numberNodes % 2 != 0))] of int(1..numberNodes)
+find depths_functionMoreInjective_activation: bool
+find depths_functionMoreInjective_size: int(1..numberNodes)
+SNSNeighbourhood depths_functionMoreInjective :
+    (depths_functionMoreInjective_size, depths_functionMoreInjective_activation, depths_neighbourhoodGroup,
+     [depths_functionMoreInjective_conjure_aux11, depths_functionMoreInjective_conjure_aux12])
+SNSIncumbentMapping([parents_Function1D, depths_Function1D],
+                    [incumbent_parents_Function1D, incumbent_depths_Function1D])
+minimising
+    sum([max([linkCosts_FunctionND[parent, q20] * toInt(parents_Function1D[q20] = parent) | q20 : int(1..numberNodes)])
+             | parent : int(1..numberNodes)])
+such that
+    parents_Function1D[initialNode] = initialNode,
+    and([q22 != initialNode -> parents_Function1D[q22] != q22 /\ linkCosts_FunctionND[parents_Function1D[q22], q22] != 0
+             | q22 : int(1..numberNodes)]),
+    and([q24 != initialNode -> depths_Function1D[q24] = depths_Function1D[parents_Function1D[q24]] + 1
+             | q24 : int(1..numberNodes)]),
+    parents_functionAnySwap_activation ->
+    parents_functionAnySwap_size * 2 =
+    sum([toInt(parents_Function1D[q25] != incumbent_parents_Function1D[q25]) | q25 : int(1..numberNodes)]),
+    !parents_functionAnySwap_activation -> and([parents_functionAnySwap_size = 1; int(1)]),
+    parents_functionLessInjective_activation ->
+    allDiff(flatten([parents_functionLessInjective_conjure_aux3, parents_functionLessInjective_conjure_aux4;
+                         int(1..2)])),
+    parents_functionLessInjective_activation ->
+    and([(q2 <= parents_functionLessInjective_size ->
+          incumbent_parents_Function1D[parents_functionLessInjective_conjure_aux3[q2]] !=
+          incumbent_parents_Function1D[parents_functionLessInjective_conjure_aux4[q2]]
+          /\
+          parents_Function1D[parents_functionLessInjective_conjure_aux3[q2]] =
+          parents_Function1D[parents_functionLessInjective_conjure_aux4[q2]])
+         /\
+         (q2 > parents_functionLessInjective_size ->
+          incumbent_parents_Function1D[parents_functionLessInjective_conjure_aux3[q2]] =
+          parents_Function1D[parents_functionLessInjective_conjure_aux3[q2]]
+          /\
+          incumbent_parents_Function1D[parents_functionLessInjective_conjure_aux4[q2]] =
+          parents_Function1D[parents_functionLessInjective_conjure_aux4[q2]])
+             | q2 : int(1..numberNodes / 2)]),
+    parents_functionLessInjective_activation ->
+    (numberNodes % 2 != 0 ->
+     parents_Function1D[parents_functionLessInjective_conjure_aux4[numberNodes / 2 + 1]] =
+     incumbent_parents_Function1D[parents_functionLessInjective_conjure_aux4[numberNodes / 2 + 1]]),
+    !parents_functionLessInjective_activation ->
+    and([parents_functionLessInjective_size = 1,
+         and([parents_functionLessInjective_conjure_aux3[q27] = 1 | q27 : int(1..numberNodes / 2)]),
+         and([parents_functionLessInjective_conjure_aux4[q28] = 1
+                  | q28 : int(1..numberNodes / 2 + toInt(numberNodes % 2 != 0))]);
+             int(1..3)]),
+    parents_functionMoreInjective_activation ->
+    allDiff(flatten([parents_functionMoreInjective_conjure_aux5, parents_functionMoreInjective_conjure_aux6;
+                         int(1..2)])),
+    parents_functionMoreInjective_activation ->
+    and([(q3 <= parents_functionMoreInjective_size ->
+          incumbent_parents_Function1D[parents_functionMoreInjective_conjure_aux5[q3]] =
+          incumbent_parents_Function1D[parents_functionMoreInjective_conjure_aux6[q3]]
+          /\
+          parents_Function1D[parents_functionMoreInjective_conjure_aux5[q3]] !=
+          parents_Function1D[parents_functionMoreInjective_conjure_aux6[q3]])
+         /\
+         (q3 > parents_functionMoreInjective_size ->
+          incumbent_parents_Function1D[parents_functionMoreInjective_conjure_aux5[q3]] =
+          parents_Function1D[parents_functionMoreInjective_conjure_aux5[q3]]
+          /\
+          incumbent_parents_Function1D[parents_functionMoreInjective_conjure_aux6[q3]] =
+          parents_Function1D[parents_functionMoreInjective_conjure_aux6[q3]])
+             | q3 : int(1..numberNodes / 2)]),
+    parents_functionMoreInjective_activation ->
+    (numberNodes % 2 != 0 ->
+     parents_Function1D[parents_functionMoreInjective_conjure_aux6[numberNodes / 2 + 1]] =
+     incumbent_parents_Function1D[parents_functionMoreInjective_conjure_aux6[numberNodes / 2 + 1]]),
+    !parents_functionMoreInjective_activation ->
+    and([parents_functionMoreInjective_size = 1,
+         and([parents_functionMoreInjective_conjure_aux5[q29] = 1 | q29 : int(1..numberNodes / 2)]),
+         and([parents_functionMoreInjective_conjure_aux6[q30] = 1
+                  | q30 : int(1..numberNodes / 2 + toInt(numberNodes % 2 != 0))]);
+             int(1..3)]),
+    depths_functionAnySwap_activation ->
+    depths_functionAnySwap_size * 2 =
+    sum([toInt(depths_Function1D[q26] != incumbent_depths_Function1D[q26]) | q26 : int(1..numberNodes)]),
+    !depths_functionAnySwap_activation -> and([depths_functionAnySwap_size = 1; int(1)]),
+    depths_functionLessInjective_activation ->
+    allDiff(flatten([depths_functionLessInjective_conjure_aux9, depths_functionLessInjective_conjure_aux10;
+                         int(1..2)])),
+    depths_functionLessInjective_activation ->
+    and([(q6 <= depths_functionLessInjective_size ->
+          incumbent_depths_Function1D[depths_functionLessInjective_conjure_aux9[q6]] !=
+          incumbent_depths_Function1D[depths_functionLessInjective_conjure_aux10[q6]]
+          /\
+          depths_Function1D[depths_functionLessInjective_conjure_aux9[q6]] =
+          depths_Function1D[depths_functionLessInjective_conjure_aux10[q6]])
+         /\
+         (q6 > depths_functionLessInjective_size ->
+          incumbent_depths_Function1D[depths_functionLessInjective_conjure_aux9[q6]] =
+          depths_Function1D[depths_functionLessInjective_conjure_aux9[q6]]
+          /\
+          incumbent_depths_Function1D[depths_functionLessInjective_conjure_aux10[q6]] =
+          depths_Function1D[depths_functionLessInjective_conjure_aux10[q6]])
+             | q6 : int(1..numberNodes / 2)]),
+    depths_functionLessInjective_activation ->
+    (numberNodes % 2 != 0 ->
+     depths_Function1D[depths_functionLessInjective_conjure_aux10[numberNodes / 2 + 1]] =
+     incumbent_depths_Function1D[depths_functionLessInjective_conjure_aux10[numberNodes / 2 + 1]]),
+    !depths_functionLessInjective_activation ->
+    and([depths_functionLessInjective_size = 1,
+         and([depths_functionLessInjective_conjure_aux9[q31] = 1 | q31 : int(1..numberNodes / 2)]),
+         and([depths_functionLessInjective_conjure_aux10[q32] = 1
+                  | q32 : int(1..numberNodes / 2 + toInt(numberNodes % 2 != 0))]);
+             int(1..3)]),
+    depths_functionMoreInjective_activation ->
+    allDiff(flatten([depths_functionMoreInjective_conjure_aux11, depths_functionMoreInjective_conjure_aux12;
+                         int(1..2)])),
+    depths_functionMoreInjective_activation ->
+    and([(q7 <= depths_functionMoreInjective_size ->
+          incumbent_depths_Function1D[depths_functionMoreInjective_conjure_aux11[q7]] =
+          incumbent_depths_Function1D[depths_functionMoreInjective_conjure_aux12[q7]]
+          /\
+          depths_Function1D[depths_functionMoreInjective_conjure_aux11[q7]] !=
+          depths_Function1D[depths_functionMoreInjective_conjure_aux12[q7]])
+         /\
+         (q7 > depths_functionMoreInjective_size ->
+          incumbent_depths_Function1D[depths_functionMoreInjective_conjure_aux11[q7]] =
+          depths_Function1D[depths_functionMoreInjective_conjure_aux11[q7]]
+          /\
+          incumbent_depths_Function1D[depths_functionMoreInjective_conjure_aux12[q7]] =
+          depths_Function1D[depths_functionMoreInjective_conjure_aux12[q7]])
+             | q7 : int(1..numberNodes / 2)]),
+    depths_functionMoreInjective_activation ->
+    (numberNodes % 2 != 0 ->
+     depths_Function1D[depths_functionMoreInjective_conjure_aux12[numberNodes / 2 + 1]] =
+     incumbent_depths_Function1D[depths_functionMoreInjective_conjure_aux12[numberNodes / 2 + 1]]),
+    !depths_functionMoreInjective_activation ->
+    and([depths_functionMoreInjective_size = 1,
+         and([depths_functionMoreInjective_conjure_aux11[q33] = 1 | q33 : int(1..numberNodes / 2)]),
+         and([depths_functionMoreInjective_conjure_aux12[q34] = 1
+                  | q34 : int(1..numberNodes / 2 + toInt(numberNodes % 2 != 0))]);
+             int(1..3)])
+
+$ Conjure's
+$ {"finds": [{"Name": "parents"}, {"Name": "depths"}],
+$  "givens": [{"Name": "numberNodes"}, {"Name": "initialNode"}, {"Name": "linkCosts"}],
+$  "enumGivens": [],
+$  "enumLettings": [],
+$  "lettings": [[{"Name": "dNodes"},
+$                {"Domain": {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                            {"Reference": [{"Name": "numberNodes"},
+$                                                                           {"DeclNoRepr": ["Given",
+$                                                                                           {"Name": "numberNodes"},
+$                                                                                           {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]},
+$                                                                                           {"NoRegion": []}]}]}]}]}}],
+$               [{"Name": "dDepths"},
+$                {"Domain": {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                            {"Reference": [{"Name": "numberNodes"},
+$                                                                           {"DeclNoRepr": ["Given",
+$                                                                                           {"Name": "numberNodes"},
+$                                                                                           {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]},
+$                                                                                           {"NoRegion": []}]}]}]}]}}]],
+$  "unnameds": [],
+$  "strategyQ": {"PickFirst": []},
+$  "strategyA": {"Compact": []},
+$  "trailCompact": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1]],
+$  "trailVerbose": [],
+$  "trailRewrites": [],
+$  "nameGenState": [["conjure_aux", 13], ["fin", 3], ["q", 27]],
+$  "nbExtraGivens": 2,
+$  "representations": [[{"Name": "numberNodes"},
+$                       {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}],
+$                      [{"MachineName": ["fin", 1, []]}, {"DomainInt": []}],
+$                      [{"MachineName": ["fin", 2, []]}, {"DomainInt": []}],
+$                      [{"Name": "linkCosts"},
+$                       {"DomainFunction": [{"Function_ND": []},
+$                                           [{"SizeAttr_Size": {"Reference": [{"MachineName": ["fin", 1, []]},
+$                                                                             {"DeclHasRepr": ["Given",
+$                                                                                              {"MachineName": ["fin", 1,
+$                                                                                                               []]},
+$                                                                                              {"DomainInt": []}]}]}},
+$                                            "PartialityAttr_Total", "JectivityAttr_None"],
+$                                           {"DomainTuple": [{"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                                             {"Reference": [{"Name": "numberNodes"},
+$                                                                                                            {"DeclHasRepr": ["Given",
+$                                                                                                                             {"Name": "numberNodes"},
+$                                                                                                                             {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]}]}]},
+$                                                            {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                                             {"Reference": [{"Name": "numberNodes"},
+$                                                                                                            {"DeclHasRepr": ["Given",
+$                                                                                                                             {"Name": "numberNodes"},
+$                                                                                                                             {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]}]}]}]},
+$                                           {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 0}},
+$                                                                            {"Reference": [{"MachineName": ["fin", 2,
+$                                                                                                            []]},
+$                                                                                           {"DeclHasRepr": ["Given",
+$                                                                                                            {"MachineName": ["fin",
+$                                                                                                                             2,
+$                                                                                                                             []]},
+$                                                                                                            {"DomainInt": []}]}]}]}]}]}],
+$                      [{"Name": "parents"},
+$                       {"DomainFunction": [{"Function_1D": []},
+$                                           [{"SizeAttr_None": []}, "PartialityAttr_Total", "JectivityAttr_None"],
+$                                           {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                            {"Reference": [{"Name": "numberNodes"},
+$                                                                                           {"DeclHasRepr": ["Given",
+$                                                                                                            {"Name": "numberNodes"},
+$                                                                                                            {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]}]}]},
+$                                           {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                            {"Reference": [{"Name": "numberNodes"},
+$                                                                                           {"DeclHasRepr": ["Given",
+$                                                                                                            {"Name": "numberNodes"},
+$                                                                                                            {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]}]}]}]}],
+$                      [{"Name": "initialNode"},
+$                       {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                        {"Reference": [{"Name": "numberNodes"},
+$                                                                       {"DeclHasRepr": ["Given", {"Name": "numberNodes"},
+$                                                                                        {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]}]}]}],
+$                      [{"Name": "depths"},
+$                       {"DomainFunction": [{"Function_1D": []},
+$                                           [{"SizeAttr_None": []}, "PartialityAttr_Total", "JectivityAttr_None"],
+$                                           {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                            {"Reference": [{"Name": "numberNodes"},
+$                                                                                           {"DeclHasRepr": ["Given",
+$                                                                                                            {"Name": "numberNodes"},
+$                                                                                                            {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]}]}]},
+$                                           {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                            {"Reference": [{"Name": "numberNodes"},
+$                                                                                           {"DeclHasRepr": ["Given",
+$                                                                                                            {"Name": "numberNodes"},
+$                                                                                                            {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]}]}]}]}],
+$                      [{"Name": "size"},
+$                       {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                        {"Reference": [{"Name": "numberNodes"},
+$                                                                       {"DeclHasRepr": ["Given", {"Name": "numberNodes"},
+$                                                                                        {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]}]}]}],
+$                      [{"MachineName": ["conjure_aux", 3, []]},
+$                       {"DomainMatrix": [{"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                          {"Op": {"MkOpDiv": [{"Reference": [{"Name": "numberNodes"},
+$                                                                                                             {"DeclHasRepr": ["Given",
+$                                                                                                                              {"Name": "numberNodes"},
+$                                                                                                                              {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]},
+$                                                                                              {"Constant": {"ConstantInt": 2}}]}}]}]},
+$                                         {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                          {"Reference": [{"Name": "numberNodes"},
+$                                                                                         {"DeclHasRepr": ["Given",
+$                                                                                                          {"Name": "numberNodes"},
+$                                                                                                          {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]}]}]}]}],
+$                      [{"MachineName": ["conjure_aux", 4, []]},
+$                       {"DomainMatrix": [{"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                          {"Op": {"MkOpSum": {"AbstractLiteral": {"AbsLitMatrix": [{"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                                                                                                                    {"Constant": {"ConstantInt": 2}}]}]},
+$                                                                                                                                   [{"Op": {"MkOpDiv": [{"Reference": [{"Name": "numberNodes"},
+$                                                                                                                                                                       {"DeclHasRepr": ["Given",
+$                                                                                                                                                                                        {"Name": "numberNodes"},
+$                                                                                                                                                                                        {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]},
+$                                                                                                                                                        {"Constant": {"ConstantInt": 2}}]}},
+$                                                                                                                                    {"Op": {"MkOpToInt": {"Op": {"MkOpNeq": [{"Op": {"MkOpMod": [{"Reference": [{"Name": "numberNodes"},
+$                                                                                                                                                                                                                {"DeclHasRepr": ["Given",
+$                                                                                                                                                                                                                                 {"Name": "numberNodes"},
+$                                                                                                                                                                                                                                 {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]},
+$                                                                                                                                                                                                 {"Constant": {"ConstantInt": 2}}]}},
+$                                                                                                                                                                             {"Constant": {"ConstantInt": 0}}]}}}}]]}}}}]}]},
+$                                         {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                          {"Reference": [{"Name": "numberNodes"},
+$                                                                                         {"DeclHasRepr": ["Given",
+$                                                                                                          {"Name": "numberNodes"},
+$                                                                                                          {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]}]}]}]}],
+$                      [{"MachineName": ["conjure_aux", 5, []]},
+$                       {"DomainMatrix": [{"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                          {"Op": {"MkOpDiv": [{"Reference": [{"Name": "numberNodes"},
+$                                                                                                             {"DeclHasRepr": ["Given",
+$                                                                                                                              {"Name": "numberNodes"},
+$                                                                                                                              {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]},
+$                                                                                              {"Constant": {"ConstantInt": 2}}]}}]}]},
+$                                         {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                          {"Reference": [{"Name": "numberNodes"},
+$                                                                                         {"DeclHasRepr": ["Given",
+$                                                                                                          {"Name": "numberNodes"},
+$                                                                                                          {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]}]}]}]}],
+$                      [{"MachineName": ["conjure_aux", 6, []]},
+$                       {"DomainMatrix": [{"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                          {"Op": {"MkOpSum": {"AbstractLiteral": {"AbsLitMatrix": [{"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                                                                                                                    {"Constant": {"ConstantInt": 2}}]}]},
+$                                                                                                                                   [{"Op": {"MkOpDiv": [{"Reference": [{"Name": "numberNodes"},
+$                                                                                                                                                                       {"DeclHasRepr": ["Given",
+$                                                                                                                                                                                        {"Name": "numberNodes"},
+$                                                                                                                                                                                        {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]},
+$                                                                                                                                                        {"Constant": {"ConstantInt": 2}}]}},
+$                                                                                                                                    {"Op": {"MkOpToInt": {"Op": {"MkOpNeq": [{"Op": {"MkOpMod": [{"Reference": [{"Name": "numberNodes"},
+$                                                                                                                                                                                                                {"DeclHasRepr": ["Given",
+$                                                                                                                                                                                                                                 {"Name": "numberNodes"},
+$                                                                                                                                                                                                                                 {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]},
+$                                                                                                                                                                                                 {"Constant": {"ConstantInt": 2}}]}},
+$                                                                                                                                                                             {"Constant": {"ConstantInt": 0}}]}}}}]]}}}}]}]},
+$                                         {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                          {"Reference": [{"Name": "numberNodes"},
+$                                                                                         {"DeclHasRepr": ["Given",
+$                                                                                                          {"Name": "numberNodes"},
+$                                                                                                          {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]}]}]}]}],
+$                      [{"MachineName": ["conjure_aux", 9, []]},
+$                       {"DomainMatrix": [{"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                          {"Op": {"MkOpDiv": [{"Reference": [{"Name": "numberNodes"},
+$                                                                                                             {"DeclHasRepr": ["Given",
+$                                                                                                                              {"Name": "numberNodes"},
+$                                                                                                                              {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]},
+$                                                                                              {"Constant": {"ConstantInt": 2}}]}}]}]},
+$                                         {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                          {"Reference": [{"Name": "numberNodes"},
+$                                                                                         {"DeclHasRepr": ["Given",
+$                                                                                                          {"Name": "numberNodes"},
+$                                                                                                          {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]}]}]}]}],
+$                      [{"MachineName": ["conjure_aux", 10, []]},
+$                       {"DomainMatrix": [{"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                          {"Op": {"MkOpSum": {"AbstractLiteral": {"AbsLitMatrix": [{"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                                                                                                                    {"Constant": {"ConstantInt": 2}}]}]},
+$                                                                                                                                   [{"Op": {"MkOpDiv": [{"Reference": [{"Name": "numberNodes"},
+$                                                                                                                                                                       {"DeclHasRepr": ["Given",
+$                                                                                                                                                                                        {"Name": "numberNodes"},
+$                                                                                                                                                                                        {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]},
+$                                                                                                                                                        {"Constant": {"ConstantInt": 2}}]}},
+$                                                                                                                                    {"Op": {"MkOpToInt": {"Op": {"MkOpNeq": [{"Op": {"MkOpMod": [{"Reference": [{"Name": "numberNodes"},
+$                                                                                                                                                                                                                {"DeclHasRepr": ["Given",
+$                                                                                                                                                                                                                                 {"Name": "numberNodes"},
+$                                                                                                                                                                                                                                 {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]},
+$                                                                                                                                                                                                 {"Constant": {"ConstantInt": 2}}]}},
+$                                                                                                                                                                             {"Constant": {"ConstantInt": 0}}]}}}}]]}}}}]}]},
+$                                         {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                          {"Reference": [{"Name": "numberNodes"},
+$                                                                                         {"DeclHasRepr": ["Given",
+$                                                                                                          {"Name": "numberNodes"},
+$                                                                                                          {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]}]}]}]}],
+$                      [{"MachineName": ["conjure_aux", 11, []]},
+$                       {"DomainMatrix": [{"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                          {"Op": {"MkOpDiv": [{"Reference": [{"Name": "numberNodes"},
+$                                                                                                             {"DeclHasRepr": ["Given",
+$                                                                                                                              {"Name": "numberNodes"},
+$                                                                                                                              {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]},
+$                                                                                              {"Constant": {"ConstantInt": 2}}]}}]}]},
+$                                         {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                          {"Reference": [{"Name": "numberNodes"},
+$                                                                                         {"DeclHasRepr": ["Given",
+$                                                                                                          {"Name": "numberNodes"},
+$                                                                                                          {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]}]}]}]}],
+$                      [{"MachineName": ["conjure_aux", 12, []]},
+$                       {"DomainMatrix": [{"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                          {"Op": {"MkOpSum": {"AbstractLiteral": {"AbsLitMatrix": [{"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                                                                                                                    {"Constant": {"ConstantInt": 2}}]}]},
+$                                                                                                                                   [{"Op": {"MkOpDiv": [{"Reference": [{"Name": "numberNodes"},
+$                                                                                                                                                                       {"DeclHasRepr": ["Given",
+$                                                                                                                                                                                        {"Name": "numberNodes"},
+$                                                                                                                                                                                        {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]},
+$                                                                                                                                                        {"Constant": {"ConstantInt": 2}}]}},
+$                                                                                                                                    {"Op": {"MkOpToInt": {"Op": {"MkOpNeq": [{"Op": {"MkOpMod": [{"Reference": [{"Name": "numberNodes"},
+$                                                                                                                                                                                                                {"DeclHasRepr": ["Given",
+$                                                                                                                                                                                                                                 {"Name": "numberNodes"},
+$                                                                                                                                                                                                                                 {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]},
+$                                                                                                                                                                                                 {"Constant": {"ConstantInt": 2}}]}},
+$                                                                                                                                                                             {"Constant": {"ConstantInt": 0}}]}}}}]]}}}}]}]},
+$                                         {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                          {"Reference": [{"Name": "numberNodes"},
+$                                                                                         {"DeclHasRepr": ["Given",
+$                                                                                                          {"Name": "numberNodes"},
+$                                                                                                          {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]}]}]}]}]],
+$  "representationsTree": [[{"MachineName": ["conjure_aux", 10, []]},
+$                           [{"rootLabel": null,
+$                             "subForest": [{"rootLabel": null,
+$                                            "subForest": []}]}]],
+$                          [{"MachineName": ["conjure_aux", 11, []]},
+$                           [{"rootLabel": null,
+$                             "subForest": [{"rootLabel": null,
+$                                            "subForest": []}]}]],
+$                          [{"MachineName": ["conjure_aux", 12, []]},
+$                           [{"rootLabel": null,
+$                             "subForest": [{"rootLabel": null,
+$                                            "subForest": []}]}]],
+$                          [{"MachineName": ["conjure_aux", 3, []]},
+$                           [{"rootLabel": null,
+$                             "subForest": [{"rootLabel": null,
+$                                            "subForest": []}]}]],
+$                          [{"MachineName": ["conjure_aux", 4, []]},
+$                           [{"rootLabel": null,
+$                             "subForest": [{"rootLabel": null,
+$                                            "subForest": []}]}]],
+$                          [{"MachineName": ["conjure_aux", 5, []]},
+$                           [{"rootLabel": null,
+$                             "subForest": [{"rootLabel": null,
+$                                            "subForest": []}]}]],
+$                          [{"MachineName": ["conjure_aux", 6, []]},
+$                           [{"rootLabel": null,
+$                             "subForest": [{"rootLabel": null,
+$                                            "subForest": []}]}]],
+$                          [{"MachineName": ["conjure_aux", 9, []]},
+$                           [{"rootLabel": null,
+$                             "subForest": [{"rootLabel": null,
+$                                            "subForest": []}]}]],
+$                          [{"Name": "depths"},
+$                           [{"rootLabel": {"Function_1D": []},
+$                             "subForest": [{"rootLabel": null,
+$                                            "subForest": []},
+$                                           {"rootLabel": null,
+$                                            "subForest": []}]}]],
+$                          [{"MachineName": ["fin", 1, []]},
+$                           [{"rootLabel": null,
+$                             "subForest": []}]],
+$                          [{"MachineName": ["fin", 2, []]},
+$                           [{"rootLabel": null,
+$                             "subForest": []}]],
+$                          [{"Name": "initialNode"},
+$                           [{"rootLabel": null,
+$                             "subForest": []}]],
+$                          [{"Name": "linkCosts"},
+$                           [{"rootLabel": {"Function_ND": []},
+$                             "subForest": [{"rootLabel": null,
+$                                            "subForest": [{"rootLabel": null,
+$                                                           "subForest": []},
+$                                                          {"rootLabel": null,
+$                                                           "subForest": []}]},
+$                                           {"rootLabel": null,
+$                                            "subForest": []}]}]],
+$                          [{"Name": "numberNodes"},
+$                           [{"rootLabel": null,
+$                             "subForest": []}]],
+$                          [{"Name": "parents"},
+$                           [{"rootLabel": {"Function_1D": []},
+$                             "subForest": [{"rootLabel": null,
+$                                            "subForest": []},
+$                                           {"rootLabel": null,
+$                                            "subForest": []}]}]],
+$                          [{"Name": "size"},
+$                           [{"rootLabel": null,
+$                             "subForest": []}]]],
+$  "originalDomains": [[{"Name": "numberNodes"},
+$                       {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}],
+$                      [{"Name": "initialNode"},
+$                       {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                        {"Reference": [{"Name": "numberNodes"}, null]}]}]}],
+$                      [{"Name": "linkCosts"},
+$                       {"DomainFunction": [[], [{"SizeAttr_None": []}, "PartialityAttr_Total", "JectivityAttr_None"],
+$                                           {"DomainTuple": [{"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                                             {"Reference": [{"Name": "numberNodes"},
+$                                                                                                            null]}]}]},
+$                                                            {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                                             {"Reference": [{"Name": "numberNodes"},
+$                                                                                                            null]}]}]}]},
+$                                           {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 0}}}]}]}],
+$                      [{"Name": "parents"},
+$                       {"DomainFunction": [[], [{"SizeAttr_None": []}, "PartialityAttr_Total", "JectivityAttr_None"],
+$                                           {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                            {"Reference": [{"Name": "numberNodes"},
+$                                                                                           null]}]}]},
+$                                           {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                            {"Reference": [{"Name": "numberNodes"},
+$                                                                                           null]}]}]}]}],
+$                      [{"Name": "depths"},
+$                       {"DomainFunction": [[], [{"SizeAttr_None": []}, "PartialityAttr_Total", "JectivityAttr_None"],
+$                                           {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                            {"Reference": [{"Name": "numberNodes"},
+$                                                                                           null]}]}]},
+$                                           {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                            {"Reference": [{"Name": "numberNodes"},
+$                                                                                           null]}]}]}]}]],
+$  "questionAnswered": []}

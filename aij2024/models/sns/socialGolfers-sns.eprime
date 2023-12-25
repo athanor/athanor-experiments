@@ -1,0 +1,175 @@
+language ESSENCE' 1.0
+
+given w: int(1..)
+given g: int(1..)
+given s: int(1..)
+letting let1 be g * s
+find sched_ExplicitR17R3R2_PartitionAsSet_ExplicitR2_Occurrence:
+        matrix indexed by [int(1..w), int(1..g), int(1..let1)] of bool
+such that
+    and([sum([toInt(or([sched_ExplicitR17R3R2_PartitionAsSet_ExplicitR2_Occurrence[q14, q20, g1] /\
+                        sched_ExplicitR17R3R2_PartitionAsSet_ExplicitR2_Occurrence[q14, q20, g2]
+                            | q20 : int(1..g)])
+                    /\ (or([g1 = q17 | q17 : int(1..let1)]) /\ or([g2 = q17 | q17 : int(1..let1)])))
+                  | q14 : int(1..w)])
+         <= 1
+             | g1 : int(1..g * s), g2 : int(1..g * s), g1 < g2]),
+    and([or([!or([and([sched_ExplicitR17R3R2_PartitionAsSet_ExplicitR2_Occurrence[q24, q30, q31] ->
+                       sched_ExplicitR17R3R2_PartitionAsSet_ExplicitR2_Occurrence[q23, q27, q31]
+                           | q31 : int(1..let1)])
+                  /\
+                  and([sched_ExplicitR17R3R2_PartitionAsSet_ExplicitR2_Occurrence[q23, q27, q32] ->
+                       sched_ExplicitR17R3R2_PartitionAsSet_ExplicitR2_Occurrence[q24, q30, q32]
+                           | q32 : int(1..let1)])
+                      | q30 : int(1..g)])
+                 | q27 : int(1..g)])
+         \/
+         or([!or([and([sched_ExplicitR17R3R2_PartitionAsSet_ExplicitR2_Occurrence[q23, q37, q38] ->
+                       sched_ExplicitR17R3R2_PartitionAsSet_ExplicitR2_Occurrence[q24, q34, q38]
+                           | q38 : int(1..let1)])
+                  /\
+                  and([sched_ExplicitR17R3R2_PartitionAsSet_ExplicitR2_Occurrence[q24, q34, q39] ->
+                       sched_ExplicitR17R3R2_PartitionAsSet_ExplicitR2_Occurrence[q23, q37, q39]
+                           | q39 : int(1..let1)])
+                      | q37 : int(1..g)])
+                 | q34 : int(1..g)])
+             | q23 : int(1..w), q24 : int(1..w), q23 < q24]),
+    and([alldifferent_except([toInt(sched_ExplicitR17R3R2_PartitionAsSet_ExplicitR2_Occurrence[q1, q8, q3]) *
+                              catchUndef(q3, 0)
+                                  | q8 : int(1..g), q3 : int(1..let1)],
+                             0)
+             | q1 : int(1..w)]),
+    and([and([s >= 1 | q9 : int(1..g)]) | q1 : int(1..w)]),
+    and([and([or([sched_ExplicitR17R3R2_PartitionAsSet_ExplicitR2_Occurrence[q1, q10, q12] /\
+                  !sched_ExplicitR17R3R2_PartitionAsSet_ExplicitR2_Occurrence[q1, q11, q12]
+                      | q12 : int(1..let1)])
+              \/
+              or([sched_ExplicitR17R3R2_PartitionAsSet_ExplicitR2_Occurrence[q1, q11, q12] /\
+                  !sched_ExplicitR17R3R2_PartitionAsSet_ExplicitR2_Occurrence[q1, q10, q12]
+                      | q12 : int(1..let1)])
+                  | q10 : int(1..g), q11 : int(1..g), q10 < q11])
+             | q1 : int(1..w)]),
+    and([and([s =
+              sum([toInt(sched_ExplicitR17R3R2_PartitionAsSet_ExplicitR2_Occurrence[q1, q5, q6]) | q6 : int(1..let1)])
+                  | q5 : int(1..g)])
+             | q1 : int(1..w)]),
+    and([let1 = sum([s | q13 : int(1..g)]) | q1 : int(1..w)])
+
+$ Conjure's
+$ {"finds": [{"Name": "sched"}],
+$  "givens": [{"Name": "w"}, {"Name": "g"}, {"Name": "s"}],
+$  "enumGivens": [],
+$  "enumLettings": [],
+$  "lettings": [[{"Name": "Golfers"},
+$                {"Domain": {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                            {"Op": {"MkOpProduct": {"AbstractLiteral": {"AbsLitMatrix": [{"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                                                                                                          {"Constant": {"ConstantInt": 2}}]}]},
+$                                                                                                                         [{"Reference": [{"Name": "g"},
+$                                                                                                                                         {"DeclNoRepr": ["Given",
+$                                                                                                                                                         {"Name": "g"},
+$                                                                                                                                                         {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]},
+$                                                                                                                                                         {"NoRegion": []}]}]},
+$                                                                                                                          {"Reference": [{"Name": "s"},
+$                                                                                                                                         {"DeclNoRepr": ["Given",
+$                                                                                                                                                         {"Name": "s"},
+$                                                                                                                                                         {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]},
+$                                                                                                                                                         {"NoRegion": []}]}]}]]}}}}]}]}}],
+$               [{"MachineName": ["let", 1, []]},
+$                {"Op": {"MkOpProduct": {"AbstractLiteral": {"AbsLitMatrix": [{"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                                                              {"Constant": {"ConstantInt": 2}}]}]},
+$                                                                             [{"Reference": [{"Name": "g"},
+$                                                                                             {"DeclNoRepr": ["Given",
+$                                                                                                             {"Name": "g"},
+$                                                                                                             {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]},
+$                                                                                                             {"NoRegion": []}]}]},
+$                                                                              {"Reference": [{"Name": "s"},
+$                                                                                             {"DeclNoRepr": ["Given",
+$                                                                                                             {"Name": "s"},
+$                                                                                                             {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]},
+$                                                                                                             {"NoRegion": []}]}]}]]}}}}]],
+$  "unnameds": [],
+$  "strategyQ": {"PickFirst": []},
+$  "strategyA": {"Compact": []},
+$  "trailCompact": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 3], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 3], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1],
+$                   [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1]],
+$  "trailVerbose": [],
+$  "trailRewrites": [],
+$  "nameGenState": [["conjure_aux", 3], ["let", 2], ["q", 40]],
+$  "nbExtraGivens": 0,
+$  "representations": [[{"Name": "g"}, {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}],
+$                      [{"Name": "s"}, {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}],
+$                      [{"Name": "w"}, {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}],
+$                      [{"Name": "sched"},
+$                       {"DomainSet": [{"Set_Explicit": []},
+$                                      {"SizeAttr_Size": {"Reference": [{"Name": "w"},
+$                                                                       {"DeclHasRepr": ["Given", {"Name": "w"},
+$                                                                                        {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]}},
+$                                      {"DomainPartition": [{"Partition_AsSet": [{"Set_Explicit": []},
+$                                                                                {"Set_Occurrence": []}]},
+$                                                           {"isRegular": true,
+$                                                            "partsNum": {"SizeAttr_Size": {"Reference": [{"Name": "g"},
+$                                                                                                         {"DeclHasRepr": ["Given",
+$                                                                                                                          {"Name": "g"},
+$                                                                                                                          {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]}},
+$                                                            "partsSize": {"SizeAttr_Size": {"Reference": [{"Name": "s"},
+$                                                                                                          {"DeclHasRepr": ["Given",
+$                                                                                                                           {"Name": "s"},
+$                                                                                                                           {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]}}},
+$                                                           {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                                            {"Reference": [{"MachineName": ["let",
+$                                                                                                                            1,
+$                                                                                                                            []]},
+$                                                                                                           {"Alias": {"Op": {"MkOpProduct": {"AbstractLiteral": {"AbsLitMatrix": [{"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                                                                                                                                                                   {"Constant": {"ConstantInt": 2}}]}]},
+$                                                                                                                                                                                  [{"Reference": [{"Name": "g"},
+$                                                                                                                                                                                                  {"DeclHasRepr": ["Given",
+$                                                                                                                                                                                                                   {"Name": "g"},
+$                                                                                                                                                                                                                   {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]},
+$                                                                                                                                                                                   {"Reference": [{"Name": "s"},
+$                                                                                                                                                                                                  {"DeclHasRepr": ["Given",
+$                                                                                                                                                                                                                   {"Name": "s"},
+$                                                                                                                                                                                                                   {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}]}]}]]}}}}}]}]}]}]}]}]],
+$  "representationsTree": [[{"Name": "g"},
+$                           [{"rootLabel": null,
+$                             "subForest": []}]],
+$                          [{"Name": "s"},
+$                           [{"rootLabel": null,
+$                             "subForest": []}]],
+$                          [{"Name": "sched"},
+$                           [{"rootLabel": {"Set_Explicit": []},
+$                             "subForest": [{"rootLabel": {"Partition_AsSet": [{"Set_Explicit": []},
+$                                                                              {"Set_Occurrence": []}]},
+$                                            "subForest": [{"rootLabel": null,
+$                                                           "subForest": []}]}]}]],
+$                          [{"Name": "w"},
+$                           [{"rootLabel": null,
+$                             "subForest": []}]]],
+$  "originalDomains": [[{"Name": "w"}, {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}],
+$                      [{"Name": "g"}, {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}],
+$                      [{"Name": "s"}, {"DomainInt": [{"RangeLowerBounded": {"Constant": {"ConstantInt": 1}}}]}],
+$                      [{"Name": "sched"},
+$                       {"DomainSet": [[], {"SizeAttr_Size": {"Reference": [{"Name": "w"}, null]}},
+$                                      {"DomainPartition": [[],
+$                                                           {"isRegular": true,
+$                                                            "partsNum": {"SizeAttr_Size": {"Reference": [{"Name": "g"},
+$                                                                                                         null]}},
+$                                                            "partsSize": {"SizeAttr_Size": {"Reference": [{"Name": "s"},
+$                                                                                                          null]}}},
+$                                                           {"DomainInt": [{"RangeBounded": [{"Constant": {"ConstantInt": 1}},
+$                                                                                            {"Reference": [{"MachineName": ["let",
+$                                                                                                                            1,
+$                                                                                                                            []]},
+$                                                                                                           null]}]}]}]}]}]],
+$  "questionAnswered": []}

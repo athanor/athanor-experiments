@@ -1,0 +1,11 @@
+Generator taken from:
+	https://site.unibo.it/operations-research/en/research/bpplib-a-bin-packing-problem-library
+	https://site.unibo.it/operations-research/en/research/bpplib-a-bin-packing-problem-library/bppgen.zip/@@download/file/bppgen.zip
+	(written in Fortran)
+
+Citation: Schwerin, P. and Wäscher, G., 1997. The bin-packing problem: A problem generator and some numerical experiments with FFD packing and MTP. International Transactions in Operational Research, 4(5-6), pp.377-389.
+
+To compile the generator: ./compile.sh
+
+To generate instances:
+	see generator-instances.sh script
