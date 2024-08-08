@@ -31,17 +31,17 @@ array[1..num_bins] of var 0..bin_capacity: bin_loads;
 var 0..num_bins: optVar;
 
 % minimize the number of loaded bins
-% solve minimize optVar;
+solve minimize optVar;
 
 % alternative solve statement
-solve :: int_search(
-         [bins[i,j] | i in 1..num_bins, j in 1..num_stuff] 
-         % ++ bin_loads 
-         , 
-         input_order, % first_fail, 
-         indomain_max, 
-         complete) 
-     minimize optVar;
+%solve :: int_search(
+%         [bins[i,j] | i in 1..num_bins, j in 1..num_stuff] 
+%         % ++ bin_loads 
+%         , 
+%         input_order, % first_fail, 
+%         indomain_max, 
+%         complete) 
+%     minimize optVar;
 
 constraint
 
