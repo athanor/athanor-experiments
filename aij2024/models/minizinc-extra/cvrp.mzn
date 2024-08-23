@@ -176,10 +176,10 @@ constraint
  optVar = sum (depot in END_DEPOT_NODES) (arrivalTime[depot]);
 
 % solve :: seq_search([int_search([successor[j] | j in NODES], first_fail, indomain_split, complete),
-               int_search(vehicle, first_fail, indomain_split, complete),
-               int_search([arrivalTime[j] | j in NODES],first_fail, indomain_min, complete),
-               int_search([load[j] | j in NODES], first_fail, indomain_min, complete)
-              ]) minimize optVar;
+%               int_search(vehicle, first_fail, indomain_split, complete),
+%               int_search([arrivalTime[j] | j in NODES],first_fail, indomain_min, complete),
+%               int_search([load[j] | j in NODES], first_fail, indomain_min, complete)
+%              ]) minimize optVar;
 solve minimize optVar; % traveltime
 
 
