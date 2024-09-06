@@ -21,7 +21,7 @@ else
     exit 1
 fi
 
-for prob in TSP KNAPSACK CVRP
+for prob in TSP KNAPSACK CVRP BINPACKING
 do
     echo "BUILDING " $chocoType $prob
     echo "================================================================================"
