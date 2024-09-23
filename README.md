@@ -28,10 +28,12 @@ The comparison is conducted on seven combinatorial optimisation problems:
 
 Folder structure:
 - `models/`: problem specifications (i.e., constraint models) of the seven combinatorial problems described above
-	+ `models/essence/*.essence`: models written in Essence, used by Athanor.
-	+ `models/minizinc/*.mzn`: models written in MiniZinc, used by  Yuck, Oscar-CBLS, Chuffed and OR-Tools.
-	+ `models/choco-lns/*.java`: models for the two Choco-LNS solvers (LNS-PG and LNS-EB).
-	+ `models/sns/*.eprime`: models used by SNS (neighbourhoods for each problem were already generated and encoded in the models).
+	+ `models/essence/*.essence`: models written in Essence, used by Athanor. Those models are used for the experiments in Sections 9 and Section 10.
+	+ `models/minizinc/*.mzn`: models written in MiniZinc, used by  Yuck, Oscar-CBLS, Chuffed and OR-Tools. Those models are used for the experiments in Sections 9.
+	+ `models/minizinc-extra/*.mzn`: models written in MiniZinc with _specialised_ global constraints (knapsack for Knapsack, bin_packing_load for Bin Packing, circuit for TSP and CVRP). Those models are used for the experiments in Section 10.
+	+ `models/choco-lns/*.java`: models for the two Choco-LNS solvers (LNS-PG and LNS-EB). Those models are used for the experiments in Sections 9.
+	+ `models/choco-lns-extra/*.java`: models for the two Choco-LNS solvers (LNS-PG and LNS-EB) with _specialised_ global constraints (knapsack for Knapsack, binPacking for Bin Packing, subCircuit for TSP and CVRP). Those models are used for the experiments in Section 10.
+	+ `models/sns/*.eprime`: models used by SNS (neighbourhoods for each problem were already generated and encoded in the models). Those models are used for the experiments in Sections 9 and Section 10.
 
 - `instances/`: problem instances of the seven combinatorial problems described above
 	+ For each problem, there are two sub-folders: 
