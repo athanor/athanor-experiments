@@ -1,7 +1,5 @@
 
 include "alldifferent_except_0.mzn";
-include "alldifferent.mzn";
-include "globals.mzn";
 
 int : numberLocations;
 %costs
@@ -41,4 +39,5 @@ constraint optVar = sum([costs[plan[i,j],plan[i,j+1]] | i in 1..numberLocations,
 %  plan[i+1,1]<=plan[i,1]
 %);
 
-solve :: int_search(plan, input_order, indomain_max) minimize optVar;
+%solve :: int_search(plan, input_order, indomain_max) 
+solve minimize optVar;

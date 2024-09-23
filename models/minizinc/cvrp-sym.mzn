@@ -41,4 +41,5 @@ constraint forall(i in 1..numberLocations-1)(
   plan[i+1,1]<=plan[i,1]
 );
 
-solve :: int_search(plan, input_order, indomain_max) minimize optVar;
+%solve :: int_search(plan, input_order, indomain_max) minimize optVar;
+solve minimize optVar;
