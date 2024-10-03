@@ -44,6 +44,9 @@ Folder structure:
 		* `*.dzn`: instances in MiniZinc format, used by Yuck, Oscar-CBLS, Chuffed and OR-Tools.
 		* `*.lns`: instances used by Choco-LNS solvers.
 
-- `results/`: all experiment results used in our paper. The `.zip` data file is quite heavy and was split into small parts. The provided `combine.sh` script can be used to combine those parts into a single file. The data file contains a [pandas](https://pandas.pydata.org/) data frame, which saves the quality of the best solution found by each solver on each problem instance at every time step (from 0s to 600s) during the solving process.
+- `results/`: all experiment results used in our paper.
+	+ `results-normal-size.zip` and `results-large-size.zip`: experiment results in Section 9 (with normal problem sizes and large sizes for scalability)
+	+ `results-normal-size-gc.zip` and `results-large-size-gc.zip`: experiment results in Section 10 (with normal problem sizes and large sizes for scalability)
+ 	+ `run-status.csv`: status of each run, as shown in figure 13 and figure 16 in the text.
 
 
